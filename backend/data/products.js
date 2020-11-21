@@ -1,6 +1,6 @@
 const products = [
 
-    {id:"22",codigo:"24142020009",descripcion:"TOMY 100P",piezas:"100P",precio:53.9,existencia:1,imageUrl:"22.jpg",departamento:"dulceria",categoria:"dulces"},
+{id:"22",codigo:"24142020009",descripcion:"TOMY 100P",piezas:"100P",precio:53.9,existencia:1,imageUrl:"22.jpg",departamento:"dulceria",categoria:"dulces"},
 {id:"68",codigo:"155",descripcion:"CARAMELO SURTIDO KG",piezas:"KG",precio:67,existencia:1,imageUrl:"68.jpg",departamento:"dulceria",categoria:"dulces"},
 {id:"153",codigo:"603554000000",descripcion:"BOLSA PIÑATERA DELICIAS 1.4K",piezas:"1.4K",precio:159,existencia:1,imageUrl:"153.jpg",departamento:"dulceria",categoria:"dulces"},
 {id:"275",codigo:"719886000000",descripcion:"PELON PELO RICO GRANDE 12P",piezas:"12P",precio:51,existencia:1,imageUrl:"275.jpg",departamento:"dulceria",categoria:"dulces"},
@@ -68,4 +68,4 @@ const products = [
 
 ]
 
-module.exports = products
+export default products
