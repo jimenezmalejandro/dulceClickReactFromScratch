@@ -9,6 +9,9 @@
   height: 50%;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 h3 {
@@ -18,9 +21,10 @@ h3 {
 .Image {
   margin-top: 15px;
   max-height: 12rem;
-  max-width: 10rem;
+  max-width: 90%;
   width: auto;
   background-color: #333;
+  border-radius: 10px;
 }
 
 .Card {
@@ -28,9 +32,59 @@ h3 {
   width: auto;
   margin: 15px;
   border-radius: 5px;
+  background-color: #fff;
 }
 
 .Body {
-  background-color: #f7ced7ff;
-  color: olivedrab;
+  /* background-color: #f7ced7ff;
+  color: olivedrab; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ListGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+/* 
+.Button {
+  background-color: #f030e6;
+  border: 1px solid #f4acec;
+}
+
+.Button:hover {
+  background-color: #f47fec;
+  border: 1px solid silver;
+
+  
+} */
+
+.Button {
+  box-shadow: inset 0px 1px 0px 0px #efdcfb;
+  background: linear-gradient(to bottom, #f47fec 5%, #f434e4 100%);
+  background-color: #f434e4;
+  border-radius: 6px;
+  border: 1px solid #c584f3;
+  display: inline-block;
+  cursor: pointer;
+  color: #ffffff;
+  font-family: Arial;
+  font-size: 15px;
+  font-weight: bold;
+  padding: 6px 24px;
+  text-decoration: none;
+  text-shadow: 0px 1px 0px #9752cc;
+}
+.Button:hover {
+  background: linear-gradient(to bottom, #f4acec 5%, #fbeaec 100%);
+  background-color: #f4acec;
+}
+.Button:active {
+  position: relative;
+  top: 1px;
+  outline: 0;
 }
