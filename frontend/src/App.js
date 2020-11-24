@@ -6,6 +6,8 @@ import Button from 'react-bootstrap/Button'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import HomeScreen from './Screens/HomeScreen'
 import ProductScreen from './Screens/ProductScreen'
+import CartScreen from './Screens/CartScreen'
+import  DulceriaScreen from './Screens/DulceriaScreen'
 
 function App() {
   return (
@@ -15,6 +17,8 @@ function App() {
       <div className='App'>
         <Route path='/' component={HomeScreen} exact/> 
         <Route path='/product/:id' component={ProductScreen}/> 
+        <Route path='/carrito/:id?' component={CartScreen}/> 
+        <Route path='/dulceria' component={DulceriaScreen}/> 
       </div>
     </Router>
     

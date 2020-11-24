@@ -1,11 +1,18 @@
-import React,{useEffect, useState} from 'react'
-import {Card, ListGroup, Button, ListGroupItem} from 'react-bootstrap'
+import React from 'react'
+import {Card, Button} from 'react-bootstrap'
+import Message from '../../Components/Message'
 import classes from './Product.module.css'
 import {Link} from 'react-router-dom'
+import {addToCart} from '../../actions/cartActions'
+import {useDispatch} from 'react-redux'
 
 const Product = ({product}) => {
 
+    const dispatch = useDispatch()
 
+    const addToCartHandler =()=>{
+        dispatch(addToCart(product._id, 1))
+    }
 
     return (
         <Card className={classes.Card}>
@@ -19,11 +26,23 @@ const Product = ({product}) => {
                         <strong>{product.descripcion}</strong>
                     </Card.Title>
                 </Link> 
-                
-                <Card.Text as='h3'>{`$ ${product.precio}`}</Card.Text>
-              
-            <Button className={classes.Button}>Agregar al carrito</Button>
-            </Card.Body>
+                    {product.precio ?
+                     <Card.Text as='h3' className={classes.CardText}>
+                            <span style={{ fontSize: '1rem'}} >$ </span>
+                        { String((product.precio)).split('.')[0]}.
+                            <span style={{fontSize: '1rem'}}>
+                        { String((product.precio).toFixed(2)).split('.')[1]}
+                            </span>
+                    </Card.Text>
+                        :  <Message>Error!</Message>
+                        }    
+                        
+                    <Button 
+                        className={classes.Button}
+                        onClick={addToCartHandler}
+                        >Agregar al carrito
+                    </Button> 
+            </Card.Body>           
         </Card>
         
     )

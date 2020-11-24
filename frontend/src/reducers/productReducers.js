@@ -13,7 +13,7 @@ export const productListReducer = (state = {products: []}, action)=>{
         case PRODUCT_LIST_REQUEST:
             return{
                 loading: true,
-                products: []
+                ...state
             }
         case PRODUCT_LIST_SUCCESS:
                 return{

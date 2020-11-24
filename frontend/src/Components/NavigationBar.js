@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 
 const NavigationBar = () => {
     return (
-      <Navbar collapseOnSelect expand="lg" className={classes.navbar} variant="dark">
+      <Navbar fixed='top' collapseOnSelect expand="lg" className={classes.navbar} variant="dark">
       <LinkContainer to='/'>
         <Navbar.Brand>
           <Image src="/transparentLogo.png" className={classes.img}/>
@@ -16,7 +16,7 @@ const NavigationBar = () => {
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
       <Navbar.Collapse id="responsive-navbar-nav">
         <Nav className="mr-auto">
-          <LinkContainer to='/home' >
+          <LinkContainer to='/' >
             <Nav.Link>Inicio</Nav.Link>
           </LinkContainer>
           <LinkContainer to='/promociones'>
@@ -42,7 +42,7 @@ const NavigationBar = () => {
           </NavDropdown>
         </Nav>
         <Nav>
-          <LinkContainer to='/carrito'>
+          <LinkContainer to='/carrito/:id?'>
             <Nav.Link ><i className='fas fa-shopping-cart'></i> Carrito</Nav.Link>
           </LinkContainer>
           <LinkContainer to='/cuenta'>

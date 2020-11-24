@@ -6,7 +6,7 @@ import Message from '../Components/Message'
 import Loader from '../Components/Loader'
 import {listProducts} from '../actions/productActions'
 
-const HomeScreen = () => { 
+const DulceriaScreen = () => { 
     const dispatch = useDispatch()
 
     const productList = useSelector(state => state.productList)
@@ -18,16 +18,18 @@ const HomeScreen = () => {
 
     return (
         <>
-            <h1>Los mas vendidos</h1>
+            <h1 style={{textAlign:'left'}}>Dulceria</h1>
             {loading ? <Loader/> : error ? <Message variant='danger'>{error}</Message>:
                 <Row>
-                    {products.map(product => (
-                        <Col  key={product.id} sm={12} md={6} lg={4} xl={3}>
-                                <Product 
-                                    product={product}
-                                />
-                        </Col>
-                    ) )}
+                    {products.map(product => {
+                        if(product.departamento === 'dulceria'){
+                            return(
+                                <Col  key={product.id} sm={12} md={6} lg={4} xl={3}>
+                                    <Product 
+                                        product={product}
+                                    />
+                                </Col>)}
+                    } )}
                 </Row>  
             }
             
@@ -36,4 +38,4 @@ const HomeScreen = () => {
     )
 }
 
-export default HomeScreen
+export default DulceriaScreen

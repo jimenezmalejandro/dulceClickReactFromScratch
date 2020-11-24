@@ -5,10 +5,19 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-family: "Fredoka One", cursive;
+  font-family: "Varela Round", sans-serif;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+h2 {
+  font-size: 1.3rem;
+  padding: 0.5rem;
+}
+
+h1 {
+  padding: 15px 0;
 }
