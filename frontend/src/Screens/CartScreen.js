@@ -60,7 +60,7 @@ const CartScreen = ({match, location, history}) => {
                                                     disabled={true}
                                                     className={classes.Form}
                                                     value={item.qty} 
-                                                    onChange={item.qty < 1 ? dispatch(addToCart(item.product,1)) : null}
+                                                    onChange={item.qty < 1 ? dispatch(addToCart(item.product,1)) : undefined}
                                                     />
                                                 <InputGroup.Append>
                                                 <Button
@@ -108,7 +108,7 @@ const CartScreen = ({match, location, history}) => {
                                 disabled={cartItems.length < 1}
                                 onClick={checkoutHandler}
                                 >
-                                Completar compra <i class="fas fa-shopping-bag"></i> 
+                                Completar compra <i className="fas fa-shopping-bag"></i> 
                             </Button>
                         </ListGroupItem>
                     </ListGroup>

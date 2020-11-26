@@ -8,6 +8,7 @@ import HomeScreen from './Screens/HomeScreen'
 import ProductScreen from './Screens/ProductScreen'
 import CartScreen from './Screens/CartScreen'
 import  DulceriaScreen from './Screens/DulceriaScreen'
+import LoginScreen from './Screens/LoginScreen';
 
 function App() {
   return (
@@ -15,10 +16,11 @@ function App() {
     <Router >
       <NavigationBar/>
       <div className='App'>
-        <Route path='/' component={HomeScreen} exact/> 
+        <Route path='/cuenta' component={LoginScreen}/> 
         <Route path='/product/:id' component={ProductScreen}/> 
         <Route path='/carrito/:id?' component={CartScreen}/> 
         <Route path='/dulceria' component={DulceriaScreen}/> 
+        <Route path='/' component={HomeScreen} exact/> 
       </div>
     </Router>
     

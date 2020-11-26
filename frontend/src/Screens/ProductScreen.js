@@ -106,7 +106,7 @@ const ProductScreen = ({match}) => {
                                             </InputGroup.Append>
                                             <FormControl
                                                 type='number'
-                                                disabled='true'
+                                                disabled={true}
                                                 className={classes.Form}
                                                 value={qty}
                                                 onChange={(e)=> e.target.value<1 ? 1 : setQty(e.target.value) }
