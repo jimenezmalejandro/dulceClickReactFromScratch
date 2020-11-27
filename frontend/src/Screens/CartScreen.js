@@ -30,8 +30,40 @@ const CartScreen = ({match, location, history}) => {
 
     return (
         <Row>
-            <Col md={8}>
-                <h1> Carrito <i className='fas fa-shopping-cart'></i> </h1>
+            <Col md={4}>
+            <h1> Carrito <i className='fas fa-shopping-cart'></i> </h1>
+                <Card>
+                    <ListGroup variant='flush'>
+                        <ListGroup.Item >
+                            <h2>Subtotal 
+                                ({cartItems.reduce((accum, item) => accum + item.qty ,0 )})
+                                articulos
+                            </h2> 
+                            <h3 style={{display: "flex", justifyContent: 'center', alignItems:'center'}}>
+                            <span style={{ fontSize: '.8rem'}} >$ </span>
+                            { String(cartItems
+                                .reduce((accum, item)=> accum + item.precio * item.qty, 0)).split('.')[0]}.
+                            <span style={{fontSize: '.8rem'}}>
+                            { String((cartItems
+                                .reduce((accum, item)=> accum + item.precio * item.qty, 0)).toFixed(2)).split('.')[1]}
+                            </span>
+                            </h3>
+
+                        </ListGroup.Item>
+                        <ListGroupItem>
+                            <Button type='button' className={classButton.ButtonSecondary} style={{width: '100%', minHeight:'3rem', backgroundColor:'#e4f434', color:'black', borderColor:'white'}} 
+                                disabled={cartItems.length < 1}
+                                onClick={checkoutHandler}
+                                >
+                                Completar compra <i className="fas fa-shopping-bag"></i> 
+                            </Button>
+                        </ListGroupItem>
+                    </ListGroup>
+                </Card>
+            </Col>
+            
+            <Col xs={6} md={8}>
+                
                 {cartItems.length === 0
                     ? <Message>Tu carrito esta vacio
                         <Link to='/'> Regresar</Link>
@@ -84,36 +116,7 @@ const CartScreen = ({match, location, history}) => {
                       </ListGroup>
                     ) }
             </Col>
-            <Col md={4}>
-                <Card>
-                    <ListGroup variant='flush'>
-                        <ListGroup.Item >
-                            <h2>Subtotal 
-                                ({cartItems.reduce((accum, item) => accum + item.qty ,0 )})
-                                articulos
-                            </h2> 
-                            <h3 style={{display: "flex", justifyContent: 'center', alignItems:'center'}}>
-                            <span style={{ fontSize: '.8rem'}} >$ </span>
-                            { String(cartItems
-                                .reduce((accum, item)=> accum + item.precio * item.qty, 0)).split('.')[0]}.
-                            <span style={{fontSize: '.8rem'}}>
-                            { String((cartItems
-                                .reduce((accum, item)=> accum + item.precio * item.qty, 0)).toFixed(2)).split('.')[1]}
-                            </span>
-                            </h3>
-
-                        </ListGroup.Item>
-                        <ListGroupItem>
-                            <Button type='button' className={classButton.ButtonSecondary} style={{width: '100%', minHeight:'3rem', backgroundColor:'#e4f434', color:'black', borderColor:'white'}} 
-                                disabled={cartItems.length < 1}
-                                onClick={checkoutHandler}
-                                >
-                                Completar compra <i className="fas fa-shopping-bag"></i> 
-                            </Button>
-                        </ListGroupItem>
-                    </ListGroup>
-                </Card>
-            </Col>
+            
         </Row>
     )
 }

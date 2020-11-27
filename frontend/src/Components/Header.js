@@ -1,12 +1,31 @@
+import React, {useEffect} from 'react'
+import {useDispatch, useSelector} from 'react-redux'
 import classes from './NavigationBar.module.css'
 import {LinkContainer} from 'react-router-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import {Navbar,Nav, NavDropdown, Image } from 'react-bootstrap'
+import {Navbar,Nav, NavDropdown, Image, Container } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 
-const NavigationBar = () => {
+function Header() {
+
+  const dispatch = useDispatch()
+
+  const userLogin = useSelector(state => state.userLogin)
+  const {userInfo} = userLogin
+
+  useEffect(() => {
+    
+  }, [userInfo])
+
+
+  const logoutHandler = ()=>{
+    console.log('you have closed this session');
+  }
+
     return (
-      <Navbar fixed='top' collapseOnSelect expand="lg" className={classes.navbar} variant="dark">
+        <header>
+            <Navbar fixed='top' collapseOnSelect expand="lg" className={classes.navbar} variant="dark">
+            <Container>
       <LinkContainer to='/'>
         <Navbar.Brand>
           <Image src="/transparentLogo.png" className={classes.img}/>
@@ -45,14 +64,26 @@ const NavigationBar = () => {
           <LinkContainer to='/carrito/:id?'>
             <Nav.Link ><i className='fas fa-shopping-cart'></i> Carrito</Nav.Link>
           </LinkContainer>
-          <LinkContainer to='/cuenta'>
-            <Nav.Link ><i className='fas fa-user'></i> Cuenta</Nav.Link>
+          {userInfo ? ( 
+            <NavDropdown title={userInfo.name.split(' ')[0]} id='username'>
+              <LinkContainer to='/micuenta'>
+                <NavDropdown.Item>Mi cuenta</NavDropdown.Item>
+              </LinkContainer>
+              <NavDropdown.Item onClick={logoutHandler}>Cerrar sesion</NavDropdown.Item>
+            </NavDropdown>
+          ):(
+          <LinkContainer to='/cuenta'> 
+            <Nav.Link ><i className='fas fa-user'></i> Cuenta
+            </Nav.Link>
           </LinkContainer>
-          
+          )
+           }
         </Nav>
       </Navbar.Collapse>
+      </Container>
     </Navbar>
+        </header>
     )
 }
 
-export default NavigationBar
+export default Header
