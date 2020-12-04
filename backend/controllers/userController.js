@@ -1,7 +1,11 @@
 import asyncHandler from 'express-async-handler'
+import express from 'express'
 import generateToken from '../utils/generateToken.js'
 import User from '../models/userModel.js'
 import { json } from 'express'
+
+const app = express()
+app.use(express.json())
 
 // @description: Authenticate user & get TOKEN
 // @route POST/api/users/login 
@@ -32,7 +36,7 @@ const authUser = asyncHandler( async (req, res)=>{
 // @route POST/api/users
 // @access Public
 const registerUser = asyncHandler( async (req, res)=>{
-    const {email, password, name} = req.body
+    const {email, password, name, validation} = req.body
 
     const userExists = await User.findOne({email})
     
@@ -41,26 +45,51 @@ const registerUser = asyncHandler( async (req, res)=>{
        throw new Error ('Ya existe este usuario')
    }
 
-   const user = await User.create({
-       name,
-       email, 
-       password
-   })
-
-   if(user){
-       res.status(201)
-        .json({
-        _id: user._id,
-        name : user.name,
-        email : user.email,
-        isAdmin: user.isAdmin,
-        token: generateToken(user._id)
-       })
-   }else {
+   if(!validation){
        res.status(400)
-       throw new Error(' Invalid user data ')
+       throw new Error ('Por favor verifica el ReCaptcha')
    }
 
+   //Secret Key
+   const secretKey = process.env.RECAPTCHA_SECRET_KEY
+   console.log(secretKey)
+   //Verify URL
+   const verifyUrl =  `https://www.google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${validation}&remoteip=${req.connection.remoteAddress}`
+   //Make request to verify URL
+   const verified = 
+        await app.get(verifyUrl, (req, res)=>{
+            console.log('request made to verifyUrl')
+            body =  JSON.parse(res.body)
+            return body.success
+    })
+
+    //if Successful 
+    if(verified){
+        console.log('request sent to create a new user')
+        const user = await User.create({
+            name,
+            email, 
+            password
+        })
+        
+        if(user){
+            res.status(201)
+             .json({
+             _id: user._id,
+             name : user.name,
+             email : user.email,
+             isAdmin: user.isAdmin,
+             token: generateToken(user._id)
+            })
+        }else {
+            res.status(400)
+            throw new Error('Datos de usuario son invalidos')
+        }
+        
+    }else{
+        res.status(400)
+        throw new Error ('Verificacion fallida')
+    }
 
 })
 

@@ -1,7 +1,6 @@
 {
   "name": "dulceclick-in-react",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "type": "module",
   "scripts": {
@@ -22,10 +21,21 @@
     "express": "^4.17.1",
     "express-async-handler": "^1.1.4",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.10.15"
+    "mongoose": "^5.10.15",
+    "react-google-recaptcha": "^2.1.0",
+    "request": "^2.88.2"
   },
   "devDependencies": {
     "concurrently": "^5.3.0",
     "nodemon": "^2.0.6"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jimenezmalejandro/dulceClickReactFromScratch.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jimenezmalejandro/dulceClickReactFromScratch/issues"
+  },
+  "homepage": "https://github.com/jimenezmalejandro/dulceClickReactFromScratch#readme",
+  "description": ""
 }

@@ -5,6 +5,7 @@ import {LinkContainer} from 'react-router-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import {Navbar,Nav, NavDropdown, Image, Container } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
+import {logout} from '../actions/userActions'
 
 function Header() {
 
@@ -19,7 +20,7 @@ function Header() {
 
 
   const logoutHandler = ()=>{
-    console.log('you have closed this session');
+    dispatch(logout())
   }
 
     return (
@@ -41,8 +42,10 @@ function Header() {
           <LinkContainer to='/promociones'>
             <Nav.Link>Promociones</Nav.Link>
           </LinkContainer>
+
+        <LinkContainer to='/catalogo' >
           <NavDropdown title="Catalogo" id="collasible-nav-dropdown">
-            <LinkContainer to='/dulceria'>
+            <LinkContainer to='/catalogo/dulceria'>
               <NavDropdown.Item>Dulcería</NavDropdown.Item>
             </LinkContainer>
             <LinkContainer to='/desechables'>
@@ -59,6 +62,7 @@ function Header() {
               <NavDropdown.Item>Estuches de regalo</NavDropdown.Item>
             </LinkContainer>
           </NavDropdown>
+          x|</LinkContainer>
         </Nav>
         <Nav>
           <LinkContainer to='/carrito/:id?'>

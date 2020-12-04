@@ -7,7 +7,9 @@ import Loader from '../Components/Loader'
 import {login} from '../actions/userActions'
 import FormContainer from '../Components/FormContainer'
 
+
 const LoginScreen = ({location, history}) => {
+    
 
     const dispatch = useDispatch()
 
@@ -29,7 +31,7 @@ const LoginScreen = ({location, history}) => {
     const submitHandler = (e) =>{
         e.preventDefault()
         dispatch(login(email, password))
-    
+        
     }
 
     return (
