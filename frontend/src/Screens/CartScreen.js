@@ -15,6 +15,8 @@ const CartScreen = ({match, location, history}) => {
     const cart = useSelector(state => state.cart)
     const {cartItems} = cart
 
+
+
     useEffect(()=>{
 
     },[dispatch])
@@ -25,7 +27,7 @@ const CartScreen = ({match, location, history}) => {
     }
 
     const checkoutHandler = ()=>{
-        console.log('checkoutHandler');
+        history.push('/login?redirect=shipping')
     }
 
     return (
