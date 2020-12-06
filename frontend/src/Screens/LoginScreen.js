@@ -65,8 +65,8 @@ const LoginScreen = ({location, history}) => {
 
             <Row className='py-3'>
                 <Col>
-                    No tienes cuenta? 
-                    <Link to={redirect ? `/registro?redirect=${redirect}` : '/registro'}> Crear cuenta
+                    No tienes cuenta? :  
+                    <Link to={redirect ? `/registro?redirect=${redirect}` : '/registro'}> Crear cuenta <span style={{fontSize: '.8rem', color: 'black'}}>(solo tomará unos segundos 😉)</span>
                     </Link>
                 </Col>
             </Row>

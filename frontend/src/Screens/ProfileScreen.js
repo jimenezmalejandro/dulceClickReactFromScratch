@@ -1,55 +1,69 @@
 import React, {useState, useEffect} from 'react'
 import {Link} from 'react-router-dom'
-import ReCAPTCHA from 'react-google-recaptcha'
 import {Form, Row, Col, Button, FormGroup} from 'react-bootstrap'
 import {useDispatch, useSelector} from 'react-redux'
 import Message from '../Components/Message'
 import Loader from '../Components/Loader'
-import {register} from '../actions/userActions'
-import FormContainer from '../Components/FormContainer'
-import AppConfig from '../App.config'
+import {getUserDetails, updateUserProfile} from '../actions/userActions'
+import { USER_UPDATE_PROFILE_RESET} from '../constants/userConstants'
 
 
-const RegisterScreen = ({location, history}) => {
+const ProfileScreen = ({history}) => {
     const [name, setName] = useState('')    
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
-    const [message, setMessage] = useState(null) 
-    const [validation, setValidation] = useState('')
+    const [message, setMessage] = useState(null)
 
-    
-    const userRegister = useSelector(state => state.userRegister)
-    const {loading, error, userInfo} = userRegister
-    
     const dispatch = useDispatch()
+    
+    const userDetails = useSelector(state => state.userDetails)
+    const {loading, error, user} = userDetails
 
-    const redirect = location.search ? location.search.split('=')[1] : '/'
+    const userLogin = useSelector(state => state.userLogin)
+    const {userInfo} = userLogin
 
+    const userUpdateProfile = useSelector(state => state.userUpdateProfile)
+    const {success, updateError} = userUpdateProfile
+    
     useEffect(()=>{
-        if(userInfo){
-            console.log(`[useEffect] fired, userInfo: ${userInfo} and redirect is : ${redirect}` );
-            history.push(redirect)
+        if(!userInfo){
+            history.push('/cuenta')
+        }else{
+            if( !user || !user.name || success){
+                if(success){
+                    alert('Datos actualizados!')
+                    setPassword('')
+                    setConfirmPassword('')
+                }
+                dispatch({type: USER_UPDATE_PROFILE_RESET})
+                dispatch(getUserDetails('profile'))
+            }else{
+                setName(user.name)
+                setEmail(user.email)
+            }
         }
-    },[history, userInfo, redirect])
+        
+    },[dispatch, history, userInfo, user, success])
 
     const submitHandler = (e) =>{
         e.preventDefault()
         if( password !== confirmPassword ){
             setMessage('Las contraseñas no coinciden')
         }else {
-            console.log('this has been rquested to be dispatched')
-            dispatch(register(name, email, password , validation))
-            console.log('dispatched register')
+            setMessage(null)
+            dispatch(updateUserProfile({id: user._id, name, email, password}))
         }
         
     }
 
-    return (
-        <FormContainer>
-            <h1>Registro</h1>
+    return <Row>
+        <Col md={3} style={{paddingBottom: '15px'}}>
+        <h2>Mi Cuenta</h2>
             {message && <Message variant='danger'>{message}</Message>}
+            {success &&  <Message variant='success'>{success}</Message>}
             {error && <Message variant='danger'>{error}</Message>}
+            {updateError && <Message variant='danger'>{updateError}</Message>}
             {loading && <Loader></Loader>}
             <Form onSubmit={submitHandler}>
                 <Form.Group controlId='name'>
@@ -92,28 +106,17 @@ const RegisterScreen = ({location, history}) => {
                     </Form.Control> 
                 </Form.Group>
 
-                 <Form.Group>
-                     <ReCAPTCHA
-                        sitekey={AppConfig.GOOGLE.siteKey}
-                        onChange={token  => setValidation(token)}
-                        onExpired={e => setValidation('')}
-                    />
-                 </Form.Group>
-                    
                 <Button type='submit' variant='primary'>
-                    Crea mi cuenta!
+                    Actualizar mis datos
                 </Button>
             </Form>
+             
+        </Col>
+        <Col md={9}>
+            <h2>Mis ordenes</h2>
+        </Col>
 
-            <Row className='py-3'>
-                <Col>
-                    Ya tengo cuenta ! 
-                    <Link to={redirect ? `/cuenta?redirect=${redirect}` : '/cuenta'}>  Ingresar a mi cuenta
-                    </Link>
-                </Col>
-            </Row>
-        </FormContainer>
-    )
+    </Row>
 }
 
-export default RegisterScreen
+export default ProfileScreen

@@ -43,8 +43,8 @@ function Header() {
             <Nav.Link>Promociones</Nav.Link>
           </LinkContainer>
 
-        <LinkContainer to='/catalogo' >
-          <NavDropdown title="Catalogo" id="collasible-nav-dropdown">
+        
+          <NavDropdown title="Catalogo" id="collasible-nav-dropdown" >
             <LinkContainer to='/catalogo/dulceria'>
               <NavDropdown.Item>Dulcería</NavDropdown.Item>
             </LinkContainer>
@@ -62,14 +62,14 @@ function Header() {
               <NavDropdown.Item>Estuches de regalo</NavDropdown.Item>
             </LinkContainer>
           </NavDropdown>
-          x|</LinkContainer>
         </Nav>
+        
         <Nav>
           <LinkContainer to='/carrito/:id?'>
             <Nav.Link ><i className='fas fa-shopping-cart'></i> Carrito</Nav.Link>
           </LinkContainer>
           {userInfo ? ( 
-            <NavDropdown title={userInfo.name.split(' ')[0]} id='username'>
+            <NavDropdown title={userInfo.name.split(' ')[0] } id='username'>
               <LinkContainer to='/micuenta'>
                 <NavDropdown.Item>Mi cuenta</NavDropdown.Item>
               </LinkContainer>
