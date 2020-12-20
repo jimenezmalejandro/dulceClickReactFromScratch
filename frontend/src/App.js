@@ -14,6 +14,7 @@ import ProfileScreen2 from './Screens/ProfileScreen2'
 import Header from './Components/Header'
 import Footer from './Components/Footer'
 import { Container } from 'react-bootstrap';
+import ShippingScreen from './Screens/ShippingScreen'
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
       <Header/>
       <main className='App'>
         <Container>
+          <Route path='/envio' component={ShippingScreen}/>
           <Route path='/cuenta' component={LoginScreen}/>
           {/* <Route path='/micuenta' component={ProfileScreen}/> */}
           <Route path='/micuenta' component={ProfileScreen2}/>

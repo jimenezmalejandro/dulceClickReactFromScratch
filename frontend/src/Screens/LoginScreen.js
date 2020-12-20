@@ -23,7 +23,6 @@ const LoginScreen = ({location, history}) => {
 
     useEffect(()=>{
         if(userInfo){
-            console.log(`[useEffect] fired, userInfo: ${userInfo} and redirect is : ${redirect}` );
             history.push(redirect)
         }
     },[history, userInfo, redirect])
