@@ -22,7 +22,6 @@ const validateZip = asyncHandler( async (req, res)=>{
             municipio: foundZip.municipio
         })
     }else{
-        res.status(401)
         throw new Error('Lo sentimos, por el momento no hacemos entregas en tu zona (prueba con la de un amig@)')
     }
 

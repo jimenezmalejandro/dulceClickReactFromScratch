@@ -10,7 +10,7 @@ export const validateZip = (zipcode) => async (dispatch)=>{
         dispatch({
             type: ZIP_VALIDATE_REQUEST
         })
-
+        
         const config = {
             headers : {
                 'Content-type' : 'application/json'

@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import {Form, Button} from 'react-bootstrap'
+import {Form, Button, Modal} from 'react-bootstrap'
 import {useDispatch, useSelector} from 'react-redux'
 import FormContainer from '../Components/FormContainer'
 import {validateZip} from '../actions/zipValidationActions'
@@ -17,21 +17,35 @@ const ShippingScreen = ({history }) => {
     const [postalCode, setPostalCode] = useState('')
     const [references, setReferences] = useState('')
     const [validated, setValidated] = useState(false)
+    const [notSupportedZip, setNotSupportedZip] = useState(false)
     const country = 'México'
 
     useEffect(() => {
-        console.log('zipInfo response is : '+ zipInfo)
+        console.log('zipInfo response is : ',  zipInfo )
     }, [zipInfo])
 
-    const submitHandler = (event)=>{
+    const submitHandler =  (event)=>{
         event.preventDefault()
         event.stopPropagation()
+
         const form = event.currentTarget
         if(form.checkValidity() === false){
-            
         }
-        dispatch(validateZip(postalCode))
+        if(!zipInfo){
+            setNotSupportedZip(true)    
+        }
+
         setValidated(true)
+    }
+
+    const closeModal = ()=>{
+        setAddress('')
+        setNeighborhood('')
+        setCity('')
+        setPostalCode('')
+        setReferences('')
+        setValidated(false)
+        setNotSupportedZip(false)
     }
  
     return <FormContainer>
@@ -87,7 +101,13 @@ const ShippingScreen = ({history }) => {
                     type='text'
                     placeholder='Código postal' 
                     value={postalCode} 
-                    onChange={(e)=> setPostalCode(e.target.value)}>
+                   //{ onChange={(e)=> setPostalCode(e.target.value)}}
+                    onChange={(e) => 
+                        {
+                            setPostalCode(e.target.value)   
+                            dispatch(validateZip(e.target.value))
+                        }}
+                    >
                 </Form.Control> 
                 <Form.Control.Feedback type="invalid">
                     El código postal es necesario para la entrega
@@ -112,7 +132,22 @@ const ShippingScreen = ({history }) => {
                     Guardar mi dirección!
             </Button>
         </Form>
+        
+    <Modal
+        centered
+        show={notSupportedZip}
+    >
+        <Modal.Header>Atención!</Modal.Header>
+        <Modal.Body>
+            Lo sentimos!😳 No tenemos cobertura en tu zona.(Prueba con la de un amigo)
+        </Modal.Body>
+        <Button onClick={closeModal}>Ok</Button>
+
+    </Modal>
+        
+    
     </FormContainer>
+    
 }
 
 export default ShippingScreen
