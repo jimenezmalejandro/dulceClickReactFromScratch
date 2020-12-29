@@ -27,11 +27,13 @@ const ShippingScreen = ({history }) => {
     const submitHandler =  (event)=>{
         event.preventDefault()
         event.stopPropagation()
-
         const form = event.currentTarget
+        
         if(form.checkValidity() === false){
+            event.preventDefault()
+            event.stopPropagation()
         }
-        if(!zipInfo){
+        if(!zipInfo && validated){
             setNotSupportedZip(true)    
         }
 
@@ -49,7 +51,7 @@ const ShippingScreen = ({history }) => {
     }
  
     return <FormContainer>
-        <h1>Envío</h1>
+        <h1> Envío <i className="fa fa-truck" aria-hidden="true"></i></h1>
         <Form  noValidate validated={validated} onSubmit={submitHandler} >
             <Form.Group controlId='address'>
                 <Form.Label>Dirección</Form.Label>
@@ -101,7 +103,6 @@ const ShippingScreen = ({history }) => {
                     type='text'
                     placeholder='Código postal' 
                     value={postalCode} 
-                   //{ onChange={(e)=> setPostalCode(e.target.value)}}
                     onChange={(e) => 
                         {
                             setPostalCode(e.target.value)   
