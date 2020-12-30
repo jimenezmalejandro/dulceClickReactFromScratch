@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import {Link} from 'react-router-dom'
+import {Link, Route} from 'react-router-dom'
 import {Form, Row, Col, Button} from 'react-bootstrap'
 import {useDispatch, useSelector} from 'react-redux'
 import Message from '../Components/Message'
@@ -56,6 +56,7 @@ const LoginScreen = ({location, history}) => {
                         value={password} 
                         onChange={(e)=> setPassword(e.target.value)}>
                     </Form.Control> 
+                    <Link to='/reestablecer'>Olvidé mi contraseña</Link>
                 </Form.Group>
                 <Button type='submit' variant='primary'>
                     Ingresar

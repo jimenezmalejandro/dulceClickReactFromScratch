@@ -25,10 +25,31 @@ const authUser = asyncHandler( async (req, res)=>{
         })
     }else{
         res.status(401)
-        throw new Error('Usuario o contrasena invalidos')
+        throw new Error('Usuario o contraseña invalidos')
     }
+})
 
+// @description: Reset password
+// @route POST/api/users/reset 
+// @access Public
+const resetPassword = asyncHandler( async (req, res)=>{
+    const {email} = req.body
 
+    const user = await User.findOne({email})
+    
+    if(user){
+        // res.json({
+        //     _id: user._id,
+        //     name : user.name,
+        //     email : user.email,
+        //     isAdmin: user.isAdmin,
+        //     token: generateToken(user._id)
+        // })
+        res.json('Hemos enviado un correo a tu dirección de email registrado')
+    }else{
+        res.status(401)
+        throw new Error('Usuario no existente')
+    }
 })
 
 
@@ -143,4 +164,4 @@ const getUserProfile = asyncHandler( async (req, res)=>{
     }
 })  
 
-export {authUser, getUserProfile, registerUser, updateUserProfile} 
+export {authUser, getUserProfile, registerUser, updateUserProfile, resetPassword} 

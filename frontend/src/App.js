@@ -8,6 +8,7 @@ import ProductScreen from './Screens/ProductScreen'
 import CartScreen from './Screens/CartScreen'
 import DulceriaScreen from './Screens/DulceriaScreen'
 import LoginScreen from './Screens/LoginScreen';
+import ForgtoPasswordScreen from './Screens/ForgotPasswordScreen'
 import RegisterScreen from './Screens/RegisterScreen';
 import ProfileScreen from './Screens/ProfileScreen'
 import ProfileScreen2 from './Screens/ProfileScreen2'
@@ -27,6 +28,7 @@ function App() {
           <Route path='/cuenta' component={LoginScreen}/>
           {/* <Route path='/micuenta' component={ProfileScreen}/> */}
           <Route path='/micuenta' component={ProfileScreen2}/>
+          <Route path='/reestablecer' component={ForgtoPasswordScreen}/> 
           <Route path='/registro' component={RegisterScreen}/> 
           <Route path='/product/:id' component={ProductScreen}/> 
           <Route path='/carrito/:id?' component={CartScreen}/> 

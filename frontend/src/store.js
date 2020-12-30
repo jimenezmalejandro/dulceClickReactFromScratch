@@ -10,6 +10,7 @@ import {
     userUpdateProfileReducer
 } from './reducers/userReducers'
 import {zipValidateReducer} from './reducers/zipReducers'
+import {resetPasswordReducer} from './reducers/resetPasswordReducers'
 
 const reducer = combineReducers({
     productList : productListReducer,
@@ -19,7 +20,8 @@ const reducer = combineReducers({
     userRegister : userRegisterReducer,
     userDetails : userDetailsReducer,
     userUpdateProfile : userUpdateProfileReducer,
-    zipValidate : zipValidateReducer
+    zipValidate : zipValidateReducer,
+    resetPassword : resetPasswordReducer
 })
 
 const cartItemsFromStorage = localStorage.getItem('cartItems') 

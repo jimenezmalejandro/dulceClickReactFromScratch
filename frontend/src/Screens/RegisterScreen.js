@@ -48,6 +48,7 @@ const RegisterScreen = ({location, history}) => {
     return (
         <FormContainer>
             <h1>Registro</h1>
+            <p><span style={{'color': 'blue'}}> Nunca compartiremos ni venderemos tus datos a terceros*</span></p>
             {message && <Message variant='danger'>{message}</Message>}
             {error && <Message variant='danger'>{error}</Message>}
             {loading && <Loader></Loader>}
@@ -110,6 +111,14 @@ const RegisterScreen = ({location, history}) => {
                     Ya tengo cuenta ! 
                     <Link to={redirect ? `/cuenta?redirect=${redirect}` : '/cuenta'}>  Ingresar a mi cuenta
                     </Link>
+                </Col>
+            </Row>
+            <Row className='py-3'>
+                <Col>
+                    
+                    <p style={{'fontWeight' : '100', 'fontSize' : '.7rem'}}>
+                    <span style={{'fontWeight' : '900', 'color':'blue', 'size':'1rem'}}>*</span>En ocaciones necesitaremos validar tus datos con tu institución financiera para procesar pagos en tus pedidos
+                     </p>
                 </Col>
             </Row>
         </FormContainer>

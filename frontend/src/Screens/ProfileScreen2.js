@@ -61,10 +61,10 @@ const ProfileScreen2 = ({history}) => {
         <Row style={{padding: '20px 0px'}} >
                 <ListGroup horizontal className='w-100' >
                     <ListGroup.Item  action href="#misdatos" variant='secondary'>
-                        <h4>Mi Datos</h4>
+                        <h5>Mis Datos</h5>
                     </ListGroup.Item>
                     <ListGroup.Item action href="#misordenes" variant='secondary' >
-                        <h4 >Mis Ordenes</h4>
+                        <h5 >Mis Ordenes</h5>
                     </ListGroup.Item>
                 </ListGroup>
         </Row>
@@ -100,7 +100,7 @@ const ProfileScreen2 = ({history}) => {
                     </Form.Group>
 
                     <Form.Group controlId='password'>
-                        <Form.Label>Contraseña</Form.Label>
+                        <Form.Label>Cambia tu contraseña</Form.Label>
                         <Form.Control 
                             type='password'
                             placeholder='ingresa constraseña' 
@@ -110,7 +110,7 @@ const ProfileScreen2 = ({history}) => {
                     </Form.Group>
 
                     <Form.Group controlId='confirmPassword'>
-                        <Form.Label>Confirma tu contraseña</Form.Label>
+                        <Form.Label>Confirma tu nueva contraseña</Form.Label>
                         <Form.Control 
                             type='password'
                             placeholder='confirma tu constraseña' 
