@@ -33,10 +33,30 @@ const authUser = asyncHandler( async (req, res)=>{
 // @route POST/api/users/reset 
 // @access Public
 const resetPassword = asyncHandler( async (req, res)=>{
-    const {email} = req.body
+    const {email, validation} = req.body
+    console.log(validation)
 
-    const user = await User.findOne({email})
-    
+    if(!validation){
+        res.status(400)
+        throw new Error ('Por favor verifica el ReCaptcha')
+    }
+ 
+    //Secret Key
+    const secretKey = process.env.RECAPTCHA_SECRET_KEY
+    console.log(secretKey)
+    //Verify URL
+    const verifyUrl =  `https://www.google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${validation}&remoteip=${req.connection.remoteAddress}`
+    //Make request to verify URL
+    const verified = 
+         await app.get(verifyUrl, (req, res)=>{
+             console.log('request made to verifyUrl')
+             body =  JSON.parse(res.body)
+             return body.success
+     })
+ 
+     //if Successful 
+     const user = await User.findOne({email})
+
     if(user){
         // res.json({
         //     _id: user._id,
@@ -58,7 +78,7 @@ const resetPassword = asyncHandler( async (req, res)=>{
 // @access Public
 const registerUser = asyncHandler( async (req, res)=>{
     const {email, password, name, validation} = req.body
-
+    console.log(validation)
     const userExists = await User.findOne({email})
     
    if(userExists){
@@ -73,20 +93,19 @@ const registerUser = asyncHandler( async (req, res)=>{
 
    //Secret Key
    const secretKey = process.env.RECAPTCHA_SECRET_KEY
-   console.log(secretKey)
    //Verify URL
    const verifyUrl =  `https://www.google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${validation}&remoteip=${req.connection.remoteAddress}`
    //Make request to verify URL
    const verified = 
         await app.get(verifyUrl, (req, res)=>{
-            console.log('request made to verifyUrl')
+            //console.log('request made to verifyUrl')
             body =  JSON.parse(res.body)
             return body.success
     })
 
     //if Successful 
     if(verified){
-        console.log('request sent to create a new user')
+        //console.log('request sent to create a new user')
         const user = await User.create({
             name,
             email, 

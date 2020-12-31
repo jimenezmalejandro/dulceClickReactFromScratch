@@ -17,6 +17,7 @@ const RegisterScreen = ({location, history}) => {
     const [confirmPassword, setConfirmPassword] = useState('')
     const [message, setMessage] = useState(null) 
     const [validation, setValidation] = useState('')
+    const [formValidated, setFormValidated] = useState(false)
 
     
     const userRegister = useSelector(state => state.userRegister)
@@ -35,6 +36,15 @@ const RegisterScreen = ({location, history}) => {
 
     const submitHandler = (e) =>{
         e.preventDefault()
+        e.stopPropagation()
+        const form = e.currentTarget
+        if (form.checkValidity() === false) {
+            e.preventDefault();
+            e.stopPropagation();
+          }
+        
+          setFormValidated(true);
+
         if( password !== confirmPassword ){
             setMessage('Las contraseñas no coinciden')
         }else {
@@ -52,45 +62,61 @@ const RegisterScreen = ({location, history}) => {
             {message && <Message variant='danger'>{message}</Message>}
             {error && <Message variant='danger'>{error}</Message>}
             {loading && <Loader></Loader>}
-            <Form onSubmit={submitHandler}>
+            <Form noValidate validated={formValidated} onSubmit={submitHandler}>
                 <Form.Group controlId='name'>
                         <Form.Label>Nombre</Form.Label>
                         <Form.Control 
+                            required
                             type='text'
                             placeholder='ingresa tu Nombre' 
                             value={name} 
                             onChange={(e)=> setName(e.target.value)}>
-                        </Form.Control> 
+                        </Form.Control>
+                        <Form.Control.Feedback type="invalid">
+                        Ingresa nombre y apellido
+                        </Form.Control.Feedback>
                     </Form.Group>
                     
                 <Form.Group controlId='email'>
                     <Form.Label>Email</Form.Label>
                     <Form.Control 
+                        required
                         type='email'
                         placeholder='ingresa tu email' 
                         value={email} 
                         onChange={(e)=> setEmail(e.target.value)}>
                     </Form.Control> 
+                    <Form.Control.Feedback type="invalid">
+                        También necesitaremos tu email
+                    </Form.Control.Feedback>
                 </Form.Group>
 
                 <Form.Group controlId='password'>
                     <Form.Label>Contraseña</Form.Label>
                     <Form.Control 
+                        required
                         type='password'
                         placeholder='ingresa constraseña' 
                         value={password} 
                         onChange={(e)=> setPassword(e.target.value)}>
                     </Form.Control> 
+                    <Form.Control.Feedback type="invalid">
+                        Crea una contraseña segura de 8 characteres o más
+                    </Form.Control.Feedback>
                 </Form.Group>
 
                 <Form.Group controlId='confirmPassword'>
                     <Form.Label>Confirma tu contraseña</Form.Label>
                     <Form.Control 
+                        required
                         type='password'
                         placeholder='confirma tu constraseña' 
                         value={confirmPassword} 
                         onChange={(e)=> setConfirmPassword(e.target.value)}>
                     </Form.Control> 
+                    <Form.Control.Feedback type="invalid">
+                        Por favor confirma tu contraseña
+                    </Form.Control.Feedback>
                 </Form.Group>
 
                  <Form.Group>

@@ -58,20 +58,21 @@ const ProfileScreen2 = ({history}) => {
     }
 
     return<Tab.Container defaultActiveKey="#misordenes">
-        <Row style={{padding: '20px 0px'}} >
+        <h1>CHANGE THIS FOR A TABBED COMPONENT https://react-bootstrap.netlify.app/components/tabs/</h1>
+        <Row className='my-5' >
                 <ListGroup horizontal className='w-100' >
-                    <ListGroup.Item  action href="#misdatos" variant='secondary'>
-                        <h5>Mis Datos</h5>
+                    <ListGroup.Item  action href="#misdatos" variant='info'>
+                        <h6>Mis Datos</h6>
                     </ListGroup.Item>
-                    <ListGroup.Item action href="#misordenes" variant='secondary' >
-                        <h5 >Mis Ordenes</h5>
+                    <ListGroup.Item action href="#misordenes" variant='info' >
+                        <h6>Mis Ordenes</h6>
                     </ListGroup.Item>
                 </ListGroup>
         </Row>
         
         <Row>  
         <Col md={6} >
-        <Tab.Content>
+        <Tab.Content>t
             <Tab.Pane eventKey="#misdatos">
                 {message && <Message variant='danger'>{message}</Message>}
                 {success &&  <Message variant='success'>{success}</Message>}

@@ -4,7 +4,7 @@ import {
     RESET_PASSWORD_SUCCESS, 
     RESET_PASSWORD_FAIL} from '../constants/resetPasswordConstants'
 
-export const reset = (email) => async (dispatch, getState)=> {
+export const reset = (email, validation) => async (dispatch, getState)=> {
     try {
         dispatch({
             type:RESET_PASSWORD_REQUEST
@@ -16,7 +16,7 @@ export const reset = (email) => async (dispatch, getState)=> {
             }
         }
 
-        const {data} = await axios.post('/api/users/reset',{email}, config)
+        const {data} = await axios.post('/api/users/reset',{email, validation}, config)
         
         dispatch({
             type: RESET_PASSWORD_SUCCESS,
