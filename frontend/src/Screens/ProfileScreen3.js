@@ -74,7 +74,8 @@ const ProfileScreen3 = ({history}) => {
     <Col sm={9} l={3} xl={6}>
       <Tab.Content>
          <Tab.Pane eventKey="#misdatos">
-         <h1>Actualizar mis datos</h1>
+         <h1>Actualizar Cuenta</h1>
+         <h3 style={{"textAlign" : "left"}}>Acceso</h3>
                 {message && <Message variant='danger'>{message}</Message>}
                 {success &&  <Message variant='success'>{success}</Message>}
                 {error && <Message variant='danger'>{error}</Message>}

@@ -1,8 +1,9 @@
 import React, {useState, useEffect} from 'react'
-import {Form, Button, Modal} from 'react-bootstrap'
+import {useDispatch, useSelector} from 'react-redux'
+import {Link, withRouter} from 'react-router-dom'
+import {Form, Button, Modal, Toast, Col, Row} from 'react-bootstrap'
 import Message from '../Components/Message'
 import Loader from '../Components/Loader'
-import {useDispatch, useSelector} from 'react-redux'
 import FormContainer from '../Components/FormContainer'
 import {validateZip} from '../actions/zipValidationActions'
 import {updateUserAddress} from '../actions/userActions'
@@ -30,6 +31,8 @@ const ShippingScreen = ({history }) => {
     const [notSupportedZip, setNotSupportedZip] = useState(false)
     const country = 'México'
 
+    const [show, setShow] = useState(false)
+
     useEffect(() => {
         if(addressInfo){
             setPostalCode(addressInfo.postalCode)
@@ -54,7 +57,6 @@ const ShippingScreen = ({history }) => {
             setNotSupportedZip(true)    
         }
         
-
         if(zipInfo){
             const newAddress = {
                 streetAndNumber: address,
@@ -64,8 +66,8 @@ const ShippingScreen = ({history }) => {
                 references,
                 neighborhood
             }
-            
            dispatch(updateUserAddress(newAddress))
+           setShow(true)
         }
 
     }
@@ -81,13 +83,13 @@ const ShippingScreen = ({history }) => {
     }
  
     return <FormContainer>
-        { loading && <Loader></Loader> }
-        { error && <Message variant="danger">{error}</Message>}
-        { success && <Message variant="success">{success}</Message>}
+        <Row className='my-3'>
+            <Link to='/carrito'> Regresar</Link>
+        </Row>
         <h1> Envío <i className="fa fa-truck" aria-hidden="true"></i></h1>
         <Form  noValidate validated={validated} onSubmit={submitHandler} >
             <Form.Group controlId='address'>
-                <Form.Label>Dirección</Form.Label>
+                <Form.Label>Calle y número</Form.Label>
                 <Form.Control 
                     required
                     type='text'
@@ -165,6 +167,7 @@ const ShippingScreen = ({history }) => {
             <Form.Group controlId='cellphone'>
                 <Form.Label>Teléfono celular</Form.Label>
                 <Form.Control
+                    pattern=".{10,10}"
                     required
                     type='text'
                     placeholder='número a 10 digitos' 
@@ -172,12 +175,23 @@ const ShippingScreen = ({history }) => {
                     onChange={(e)=> setCellphone(e.target.value)}>
                 </Form.Control> 
                 <Form.Control.Feedback type="invalid">
-                    Usaremos tu número para comunicarnos contigo en caso de tener problemas con la entrega
+                    10 dígitos -Usaremos tu número para comunicarnos contigo en caso de tener problemas con la entrega
                 </Form.Control.Feedback>
             </Form.Group>
             
+            { loading && <Loader></Loader> }
+            { error && <Message variant="danger">{error}</Message>}
+            { success && 
+            <Row>
+                <Col xs={12} xl={12}>
+                    <Toast onClose={() => setShow(false)} show={show} delay={3000} autohide>
+                    <Toast.Body>✔️{success}</Toast.Body>
+                    </Toast>
+                </Col>
+            </Row>}
+
             <Button className="my-4" type='submit' variant='info'>
-                    Guardar mi dirección!
+                    Guardar mi dirección
             </Button>
         </Form>
         
@@ -198,4 +212,4 @@ const ShippingScreen = ({history }) => {
     
 }
 
-export default ShippingScreen
+export default withRouter(ShippingScreen)

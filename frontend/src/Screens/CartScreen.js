@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import Message from '../Components/Message'
-import {Link} from 'react-router-dom'
+import {Link, withRouter} from 'react-router-dom'
 import {Row, Col, ListGroup, Image, Card, Button, InputGroup, FormControl, ListGroupItem} from 'react-bootstrap'
 import classes from '../Styles/ProductScreen.module.css'
 import {addToCart, removeFromCart} from '../actions/cartActions'
@@ -122,4 +122,4 @@ const CartScreen = ({match, location, history}) => {
     )
 }
 
-export default CartScreen
+export default withRouter( CartScreen)
