@@ -64,8 +64,7 @@ const CartScreen = ({match, location, history}) => {
                 </Card>
             </Col>
             
-            <Col xs={6} md={8}>
-                
+            <Col xs={12} md={8} className="my-3">
                 {cartItems.length === 0
                     ? <Message>Tu carrito esta vacio
                         <Link to='/'> Regresar</Link>

@@ -7,7 +7,8 @@ import {
     userLoginReducer, 
     userRegisterReducer, 
     userDetailsReducer,
-    userUpdateProfileReducer
+    userUpdateProfileReducer,
+    userUpdateAddressReducer
 } from './reducers/userReducers'
 import {zipValidateReducer} from './reducers/zipReducers'
 import {resetPasswordReducer} from './reducers/resetPasswordReducers'
@@ -20,6 +21,7 @@ const reducer = combineReducers({
     userRegister : userRegisterReducer,
     userDetails : userDetailsReducer,
     userUpdateProfile : userUpdateProfileReducer,
+    userUpdateAddress: userUpdateAddressReducer,
     zipValidate : zipValidateReducer,
     resetPassword : resetPasswordReducer
 })

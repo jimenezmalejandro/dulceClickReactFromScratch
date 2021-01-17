@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import {Link} from 'react-router-dom'
+import {Link, withRouter} from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux'
 import {Row, Col, Image, ListGroup, Card, Button, Container, InputGroup, FormControl} from 'react-bootstrap'
 import {productDetails} from '../actions/productActions'
@@ -8,8 +8,11 @@ import Message from '../Components/Message'
 import classes from '../Styles/ProductScreen.module.css'
 import { addToCart } from '../actions/cartActions'
 
-const ProductScreen = ({match}) => {
+
+const ProductScreen = ({match, history}) => {
+    
     const [qty, setQty] = useState(1) 
+    const [initial, setInitial] = useState(false)
 
     const dispatch = useDispatch()
     
@@ -40,14 +43,16 @@ const ProductScreen = ({match}) => {
         
         dispatch(addToCart(id, qty))
         console.log(`dispatched id: ${id} qty:${qty}`);
+        setInitial(100)
     }
     
     return (
         <>
-        <Link className='btn btn-dark my-3' to='/'>Regresar</Link>
+        {/* <Link className='btn btn-dark my-3' to='/' >Regresar</Link> */}
+        <Button onClick={()=> history.goBack()} className='btn btn-dark my-3'>regresar</Button>
         {loading ? <Loader/> : error ? <Message variant='danger'>{error}</Message> :
          <Container fluid>
-            <Row >
+            <Row className="my-3" >
                 <Col md={4}>
                     <Image src={`/images/${product.imageUrl}`} alt={product.descripcion} fluid/>
                 </Col>
@@ -141,4 +146,4 @@ const ProductScreen = ({match}) => {
     )
 }
 
-export default ProductScreen
+export default withRouter(ProductScreen)

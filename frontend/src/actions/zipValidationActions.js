@@ -17,7 +17,7 @@ export const validateZip = (zipcode) => async (dispatch)=>{
             }
         }
 
-        const {data} = await axios.post('api/users/validatezip', {zipcode}, config)
+        const {data} = await axios.post('api/zip/validatezip', {zipcode}, config)
 
         dispatch({
             type: ZIP_VALIDATE_SUCCESS,

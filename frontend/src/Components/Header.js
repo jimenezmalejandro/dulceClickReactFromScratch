@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from 'react-redux'
 import classes from './NavigationBar.module.css'
 import {LinkContainer} from 'react-router-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import {Navbar,Nav, NavDropdown, Image, Container } from 'react-bootstrap'
+import {Navbar,Nav, NavDropdown, Image, Container, Form, Button, FormControl } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import {logout} from '../actions/userActions'
 
@@ -63,6 +63,7 @@ function Header() {
             </LinkContainer>
           </NavDropdown>
         </Nav>
+
         
         <Nav>
           <LinkContainer to='/carrito/:id?'>
@@ -86,6 +87,9 @@ function Header() {
       </Navbar.Collapse>
       </Container>
     </Navbar>
+      
+      
+
         </header>
     )
 }

@@ -18,6 +18,39 @@ const userSchema = mongoose.Schema({
         required: true
     },
 
+    address:{
+
+        streetAndNumber : {
+            type:String
+        },
+        postalCode: {
+            type:String
+        },
+
+        city: {
+            type: String
+        },
+        cellphone: {
+            type: Number,
+            min: 1000000000,
+            max: 9999999999,
+            required: false
+        },
+        references: {
+            type: String,
+            required: false
+        },
+        references : {
+            type:String,
+            required: false
+        },
+        neighborhood : {
+            type: String,
+            required: false
+        }
+
+    },
+
     isAdmin: {
         type: Boolean,
         required: true,

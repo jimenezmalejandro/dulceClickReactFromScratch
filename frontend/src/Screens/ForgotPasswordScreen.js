@@ -26,13 +26,12 @@ const ForgotPasswordScreen = ({location, history}) => {
         if(isValid){
 
         }
-    },[isValid, ])
+    },[isValid ])
 
     const submitHandler = (e) =>{
         e.preventDefault()
-
         dispatch(reset(email, validation))
-        
+        setValidation('')
     }
 
     return (

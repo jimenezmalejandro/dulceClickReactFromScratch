@@ -5,6 +5,8 @@ import classes from './Product.module.css'
 import {Link} from 'react-router-dom'
 import {addToCart} from '../../actions/cartActions'
 import {useDispatch} from 'react-redux'
+//Animation
+import {motion} from 'framer-motion'
 
 const Product = ({product}) => {
 
@@ -15,7 +17,7 @@ const Product = ({product}) => {
     }
 
     return (
-        <Card className={classes.Card}>
+        <Card animate={{rotate:360}} transition={{duration:2}} className={classes.Card}>
             <Link to={`/product/${product._id}`} className={classes.Link}>
                 <Card.Img src={`/images/${product.imageUrl}`} variant='top' className={classes.Image}/>
             </Link>
@@ -38,6 +40,7 @@ const Product = ({product}) => {
                         }    
                         
                     <Button 
+                        whileHover={{ scale: 1.2 }}
                         className={classes.Button}
                         onClick={addToCartHandler}
                         >Agregar al carrito

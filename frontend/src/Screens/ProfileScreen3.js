@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import {Link} from 'react-router-dom'
-import {Form, Row, Col, Button, ListGroup, Tab, Tabs} from 'react-bootstrap'
+import {Form, Row, Col, Button, ListGroup, Tab, Tabs, Nav} from 'react-bootstrap'
 import {useDispatch, useSelector} from 'react-redux'
 import Message from '../Components/Message'
 import Loader from '../Components/Loader'
@@ -8,7 +8,7 @@ import {getUserDetails, updateUserProfile} from '../actions/userActions'
 import { USER_UPDATE_PROFILE_RESET} from '../constants/userConstants'
 
 
-const ProfileScreen2 = ({history}) => {
+const ProfileScreen3 = ({history}) => {
     const [name, setName] = useState('')    
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -58,22 +58,23 @@ const ProfileScreen2 = ({history}) => {
     }
 
     return(
-    <Tab.Container  defaultActiveKey="#misordenes">
-        <Row className='my-5' >
-                <ListGroup horizontal className='w-100' >
-                    <ListGroup.Item  action href="#misdatos" variant='info'>
-                        <h6>Mis Datos</h6>
-                    </ListGroup.Item>
-                    <ListGroup.Item action href="#misordenes" variant='info' >
-                        <h6>Mis Ordenes</h6>
-                    </ListGroup.Item>
-                </ListGroup>
-        </Row>
-        
-        <Row>  
-        <Col md={6} >
-        <Tab.Content>t
-            <Tab.Pane eventKey="#misdatos">
+
+<Tab.Container id="left-tabs-example" defaultActiveKey="#misdatos">
+  <Row>
+    <Col sm={3}>
+      <Nav  variant="pills" style={{"margin":"20px"}} className="flex-column">
+        <Nav.Item>
+          <Nav.Link eventKey="#misdatos">Mis Datos</Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
+          <Nav.Link eventKey="#ordenes">Mis órdenes</Nav.Link>
+        </Nav.Item>
+      </Nav>
+    </Col>
+    <Col sm={9} l={3} xl={6}>
+      <Tab.Content>
+         <Tab.Pane eventKey="#misdatos">
+         <h1>Actualizar mis datos</h1>
                 {message && <Message variant='danger'>{message}</Message>}
                 {success &&  <Message variant='success'>{success}</Message>}
                 {error && <Message variant='danger'>{error}</Message>}
@@ -120,21 +121,21 @@ const ProfileScreen2 = ({history}) => {
                         </Form.Control> 
                     </Form.Group>
 
-                    <Button type='submit' variant='primary'>
+                    <Button type='submit' variant='info'>
                         Actualizar mis datos
                     </Button>
                 </Form>
-                </Tab.Pane>
-                
-                <Tab.Pane eventKey="#misordenes">
-                    <h2>Órdenes</h2>
-                </Tab.Pane>
+        </Tab.Pane>
 
-            </Tab.Content>
-        </Col>
-    </Row>
-    </Tab.Container>
+        <Tab.Pane eventKey="#ordenes">
+          <h1>Órdenes</h1>
+        </Tab.Pane>
+      </Tab.Content>
+    </Col>
+  </Row>
+</Tab.Container>
+
     )
 }
 
-export default ProfileScreen2
+export default ProfileScreen3

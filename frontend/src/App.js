@@ -10,8 +10,9 @@ import DulceriaScreen from './Screens/DulceriaScreen'
 import LoginScreen from './Screens/LoginScreen';
 import ForgtoPasswordScreen from './Screens/ForgotPasswordScreen'
 import RegisterScreen from './Screens/RegisterScreen';
-import ProfileScreen from './Screens/ProfileScreen'
-import ProfileScreen2 from './Screens/ProfileScreen2'
+//import ProfileScreen from './Screens/ProfileScreen'
+//import ProfileScreen2 from './Screens/ProfileScreen2'
+import ProfileScreen3 from './Screens/ProfileScreen3'
 import Header from './Components/Header'
 import Footer from './Components/Footer'
 import { Container } from 'react-bootstrap';
@@ -27,7 +28,8 @@ function App() {
           <Route path='/envio' component={ShippingScreen}/>
           <Route path='/cuenta' component={LoginScreen}/>
           {/* <Route path='/micuenta' component={ProfileScreen}/> */}
-          <Route path='/micuenta' component={ProfileScreen2}/>
+          {/* <Route path='/micuenta' component={ProfileScreen2}/> */}
+          <Route path='/micuenta' component={ProfileScreen3}/>
           <Route path='/reestablecer' component={ForgtoPasswordScreen}/> 
           <Route path='/registro' component={RegisterScreen}/> 
           <Route path='/product/:id' component={ProductScreen}/> 

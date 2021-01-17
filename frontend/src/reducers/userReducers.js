@@ -14,6 +14,9 @@ import {
     USER_UPDATE_PROFILE_SUCCESS,
     USER_UPDATE_PROFILE_FAIL,
     USER_UPDATE_PROFILE_RESET,
+    USER_UPDATE_ADDRESS_REQUEST,
+    USER_UPDATE_ADDRESS_SUCCESS,
+    USER_UPDATE_ADDRESS_FAIL
 
 } from '../constants/userConstants'
 
@@ -105,4 +108,25 @@ export const userUpdateProfileReducer = (state = {}, action)=>{
         default:
             return state
     }
+}
+
+export const userUpdateAddressReducer = (state ={}, action )=>{
+    switch(action.type){
+        case USER_UPDATE_ADDRESS_REQUEST:
+            return{loading:true}
+        
+        case USER_UPDATE_ADDRESS_SUCCESS:
+            return{
+                loading: false,
+                success: 'Direción actualizada',
+            }
+        case USER_UPDATE_ADDRESS_FAIL:
+            return{
+                loading: false,
+                error: action.payload
+            }
+        default:
+            return state
+    }
+
 }

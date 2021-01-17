@@ -163,6 +163,37 @@ const updateUserProfile = asyncHandler( async (req, res)=>{
     }
 })  
 
+
+// @description: UPDATE user ADDRESS
+// @route PUT/api/users/address 
+// @access Private
+const updateUserAddress = asyncHandler( async (req, res)=>{
+    const { user, address} = req.body
+
+    const existingUser = await User.findById(user._id)
+
+    if(existingUser){
+        existingUser.address.streetAndNumber = address.streetAndNumber
+        existingUser.address.postalCode = address.postalCode
+        existingUser.address.city = address.city || existingUser.address.city
+        existingUser.address.references = address.references || existingUser.address.references
+        existingUser.address.neighborhood = address.neighborhood || existingUser.address.neighborhood
+        existingUser.address.cellphone = address.cellphone || existingUser.address.cellphone
+       if(req.body.password){
+           user.password = req.body.password
+       }
+
+       const updatedAddress = await existingUser.save()
+       
+       res.json({updatedAddress})
+    }else{
+        res.status(404)
+        throw new Error('Un error ha ocurrido. Si el problema persiste, por favor contáctanos al correo de sporte')
+    }
+})  
+
+
+
 // @description: GET user profile
 // @route PUT/api/users/profile 
 // @access Private
@@ -175,6 +206,7 @@ const getUserProfile = asyncHandler( async (req, res)=>{
             name : user.name,
             email : user.email,
             isAdmin: user.isAdmin,
+            addressInfo: user.address
         })
         
     }else{
@@ -183,4 +215,4 @@ const getUserProfile = asyncHandler( async (req, res)=>{
     }
 })  
 
-export {authUser, getUserProfile, registerUser, updateUserProfile, resetPassword} 
+export {authUser, getUserProfile, registerUser, updateUserProfile, resetPassword, updateUserAddress} 

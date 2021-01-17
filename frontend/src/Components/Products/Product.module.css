@@ -70,6 +70,7 @@ h3 {
 .Button:hover {
   background: linear-gradient(to bottom, #f4acec 5%, #fbeaec 100%);
   background-color: #f4acec;
+ 
 }
 .Button:active {
   position: relative;
