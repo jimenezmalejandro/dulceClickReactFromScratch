@@ -1,15 +1,15 @@
 import React, {useState, useEffect} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {Link, withRouter} from 'react-router-dom'
-import {Form, Button, Modal, Toast, Col, Row} from 'react-bootstrap'
+import {Form, Button, Modal, Toast, Col, Row, Container} from 'react-bootstrap'
 import Message from '../Components/Message'
 import Loader from '../Components/Loader'
 import FormContainer from '../Components/FormContainer'
 import {validateZip} from '../actions/zipValidationActions'
 import {updateUserAddress} from '../actions/userActions'
 
-const ShippingScreen = ({history }) => {
-
+const ShippingScreen = ({history, match }) => {
+    console.log(history.location.pathname)
     const dispatch = useDispatch()
 
     const userDetails = useSelector(state => state.userDetails)
@@ -32,6 +32,10 @@ const ShippingScreen = ({history }) => {
     const country = 'México'
 
     const [show, setShow] = useState(false)
+
+    const colWidth = history.location.pathname === '/envio' ? 'col-lg-6' : 'col-lg-12 col-md-4'
+    console.log("column width")
+    console.log(colWidth)
 
     useEffect(() => {
         if(addressInfo){
@@ -82,13 +86,18 @@ const ShippingScreen = ({history }) => {
         setNotSupportedZip(false)
     }
  
-    return <FormContainer>
-        <Row className='my-3'>
+    return <Container>
+    <Row className="justify-content-md-center">
+        <Col className={colWidth}>
+        {history.location.pathname === '/envio' &&
+        <Row >
             <Link to='/carrito'> Regresar</Link>
         </Row>
+        }
+        
         <h1> Envío <i className="fa fa-truck" aria-hidden="true"></i></h1>
         <Form  noValidate validated={validated} onSubmit={submitHandler} >
-            <Form.Group controlId='address'>
+            <Form.Group controlId='address' >
                 <Form.Label>Calle y número</Form.Label>
                 <Form.Control 
                     required
@@ -201,14 +210,14 @@ const ShippingScreen = ({history }) => {
     >
         <Modal.Header>Alerta!</Modal.Header>
         <Modal.Body>
-            Lo sentimos!😳 No tenemos cobertura en tu zona.(Prueba con la de un amigo)
+            Lo sentimos!😳 No tenemos cobertura en tu zona.(Prueba con la de un amig@)
         </Modal.Body>
         <Button onClick={closeModal}>Ok</Button>
 
     </Modal>
-        
-    
-    </FormContainer>
+    </Col>
+</Row>
+    </Container>
     
 }
 

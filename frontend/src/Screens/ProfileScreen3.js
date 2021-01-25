@@ -6,7 +6,8 @@ import Message from '../Components/Message'
 import Loader from '../Components/Loader'
 import {getUserDetails, updateUserProfile} from '../actions/userActions'
 import { USER_UPDATE_PROFILE_RESET} from '../constants/userConstants'
-
+import ShippingScreen from '../Screens/ShippingScreen'
+import classes from '../Styles/ProfileScreen.module.css' 
 
 const ProfileScreen3 = ({history}) => {
     const [name, setName] = useState('')    
@@ -60,27 +61,31 @@ const ProfileScreen3 = ({history}) => {
     return(
 
 <Tab.Container id="left-tabs-example" defaultActiveKey="#misdatos">
-  <Row>
-    <Col sm={3}>
+  <Row >
+    <Col sm={3} >
       <Nav  variant="pills" style={{"margin":"20px"}} className="flex-column">
         <Nav.Item>
-          <Nav.Link eventKey="#misdatos">Mis Datos</Nav.Link>
+          <Nav.Link eventKey="#misdatos">Mis datos de cuenta</Nav.Link>
         </Nav.Item>
         <Nav.Item>
           <Nav.Link eventKey="#ordenes">Mis órdenes</Nav.Link>
         </Nav.Item>
+        <Nav.Item>
+          <Nav.Link eventKey="#direccion">Dirección de envío</Nav.Link>
+        </Nav.Item>
       </Nav>
     </Col>
-    <Col sm={9} l={3} xl={6}>
+    <Col sm={9} l={3} xl={6} >
       <Tab.Content>
          <Tab.Pane eventKey="#misdatos">
-         <h1>Actualizar Cuenta</h1>
+         {/* <h1>Actualizar Cuenta</h1> */}
          <h3 style={{"textAlign" : "left"}}>Acceso</h3>
                 {message && <Message variant='danger'>{message}</Message>}
                 {success &&  <Message variant='success'>{success}</Message>}
                 {error && <Message variant='danger'>{error}</Message>}
                 {updateError && <Message variant='danger'>El email seleccionado ya está registrado con otra cuenta</Message>}
                 {loading && <Loader></Loader>}
+           
                 <Form onSubmit={submitHandler}>
                     <Form.Group controlId='name'>
                             <Form.Label>Nombre</Form.Label>
@@ -131,9 +136,17 @@ const ProfileScreen3 = ({history}) => {
         <Tab.Pane eventKey="#ordenes">
           <h1>Órdenes</h1>
         </Tab.Pane>
+
+        <Tab.Pane eventKey="#direccion">
+            <ShippingScreen className='col-md-12 col-12'></ShippingScreen>
+        </Tab.Pane>
+
       </Tab.Content>
     </Col>
   </Row>
+
+
+
 </Tab.Container>
 
     )
