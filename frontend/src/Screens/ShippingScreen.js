@@ -6,14 +6,14 @@ import Message from '../Components/Message'
 import Loader from '../Components/Loader'
 import FormContainer from '../Components/FormContainer'
 import {validateZip} from '../actions/zipValidationActions'
-import {updateUserAddress} from '../actions/userActions'
+import {getUserDetails, updateUserAddress} from '../actions/userActions'
+import { get } from 'request'
 
 const ShippingScreen = ({history, match }) => {
-    console.log(history.location.pathname)
     const dispatch = useDispatch()
 
     const userDetails = useSelector(state => state.userDetails)
-    const {addressInfo} = userDetails.user
+    const {user : {addressInfo}} = userDetails
 
     const zip = useSelector((state)=> state.zipValidate)
     const {zipInfo} = zip
@@ -33,18 +33,19 @@ const ShippingScreen = ({history, match }) => {
 
     const [show, setShow] = useState(false)
 
-    const colWidth = history.location.pathname === '/envio' ? 'col-lg-6' : 'col-lg-12 col-md-4'
-    console.log("column width")
-    console.log(colWidth)
+    const colWidth = history.location.pathname === '/envio' ? 'col-lg-6' : 'col-lg-12 col-md-9'
 
     useEffect(() => {
-        if(addressInfo){
-            setPostalCode(addressInfo.postalCode)
+        if (addressInfo){
+            setReferences(addressInfo.references)
+            setCellphone(addressInfo.cellphone)
+            setNeighborhood(addressInfo.neighborhood)
             setAddress(addressInfo.streetAndNumber)
             setCity(addressInfo.city)
-        }
+            console.log('looping in addressInfo')
+        }   
         console.log("this is looping")
-    }, [zipInfo,success])
+    }, [success, addressInfo])
 
     const submitHandler =  (e)=>{
         e.preventDefault()
@@ -72,6 +73,7 @@ const ShippingScreen = ({history, match }) => {
             }
            dispatch(updateUserAddress(newAddress))
            setShow(true)
+           dispatch(getUserDetails('profile'))
         }
 
     }

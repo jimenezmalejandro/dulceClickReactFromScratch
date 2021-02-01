@@ -1,7 +1,9 @@
 import {
     ZIP_VALIDATE_SUCCESS, 
     ZIP_VALIDATE_FAIL,
-    ZIP_VALIDATE_REQUEST} from '../constants/zipConstants'
+    ZIP_VALIDATE_REQUEST, 
+    ZIP_VALIDATE_RESET
+} from '../constants/zipConstants'
 
     export const zipValidateReducer = (state = {}, action) =>{
         switch (action.type){
@@ -19,6 +21,8 @@ import {
                     loading: false,
                     error: action.payload
                 }
+            case  ZIP_VALIDATE_RESET:
+                return{}
                 
             default:
                 return state

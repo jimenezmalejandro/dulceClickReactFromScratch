@@ -16,7 +16,8 @@ import {
     USER_UPDATE_PROFILE_SUCCESS,
     USER_UPDATE_ADDRESS_REQUEST,
     USER_UPDATE_ADDRESS_SUCCESS,
-    USER_UPDATE_ADDRESS_FAIL
+    USER_UPDATE_ADDRESS_FAIL,
+    USER_UPDATE_ADDRESS_RESET
 } from "../constants/userConstants"
 
 export const login = (email, password) => async(dispatch) =>{

@@ -16,7 +16,8 @@ import {
     USER_UPDATE_PROFILE_RESET,
     USER_UPDATE_ADDRESS_REQUEST,
     USER_UPDATE_ADDRESS_SUCCESS,
-    USER_UPDATE_ADDRESS_FAIL
+    USER_UPDATE_ADDRESS_FAIL,
+    USER_UPDATE_ADDRESS_RESET
 
 } from '../constants/userConstants'
 
@@ -125,6 +126,8 @@ export const userUpdateAddressReducer = (state ={}, action )=>{
                 loading: false,
                 error: action.payload
             }
+        case USER_UPDATE_ADDRESS_RESET:
+            return{}
         default:
             return state
     }
