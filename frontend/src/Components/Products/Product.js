@@ -1,5 +1,5 @@
-import React from 'react'
-import {Card, Button} from 'react-bootstrap'
+import React, {useState} from 'react'
+import {Card, Button, Toast, Row, Col} from 'react-bootstrap'
 import Message from '../../Components/Message'
 import classes from './Product.module.css'
 import {Link} from 'react-router-dom'
@@ -10,10 +10,14 @@ import {motion} from 'framer-motion'
 
 const Product = ({product}) => {
 
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
+
+    const [show, setShow] = useState(false);
 
     const addToCartHandler =()=>{
         dispatch(addToCart(product._id, 1))
+        setShow(true);
+        
     }
 
     return (
@@ -37,12 +41,34 @@ const Product = ({product}) => {
                             </span>
                     </Card.Text>
                         :  <Message>Error!</Message>
-                        }    
-                        
+                        }
+            <Row>
+                <Col xs={12}>
+                    <Toast 
+                          style={{
+                            position: 'absolute',
+                            top: -80,
+                            right: 0,
+                            zIndex: 999999,
+                            width: '170px'
+                            }} 
+                    onClose={() => setShow(false)} show={show} delay={900} autohide>
+                    <Toast.Header>
+                        <strong className="mr-auto">Añadido al carrito</strong>
+                    </Toast.Header>
+                    <Toast.Body>
+                    <i className="fas fa-cart-plus"></i> + 1
+                    </Toast.Body>
+                    </Toast>
+                </Col>
+            </Row>
+                    
+                     
                     <Button 
-                        whileHover={{ scale: 1.2 }}
                         className={classes.Button}
-                        onClick={addToCartHandler}
+                        onClick={
+                            addToCartHandler
+                        }
                         >Agregar al carrito
                     </Button> 
             </Card.Body>           

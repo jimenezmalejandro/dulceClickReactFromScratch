@@ -4,6 +4,7 @@ import {Link, withRouter} from 'react-router-dom'
 import {Form, Button, Modal, Toast, Col, Row, Container} from 'react-bootstrap'
 import Message from '../Components/Message'
 import Loader from '../Components/Loader'
+import CheckoutSteps from '../Components/CheckoutSteps' 
 import FormContainer from '../Components/FormContainer'
 import {validateZip} from '../actions/zipValidationActions'
 import {getUserDetails, updateUserAddress} from '../actions/userActions'
@@ -29,11 +30,11 @@ const ShippingScreen = ({history, match }) => {
     const [validated, setValidated] = useState(false)
     const [cellphone, setCellphone] = useState('')
     const [notSupportedZip, setNotSupportedZip] = useState(false)
-    const country = 'México'
 
     const [show, setShow] = useState(false)
 
-    const colWidth = history.location.pathname === '/envio' ? 'col-lg-6' : 'col-lg-12 col-md-9'
+    const shippingScreen = history.location.pathname === '/envio'
+    const colWidth = shippingScreen ? 'col-lg-6' : 'col-lg-12 col-md-9'
 
     useEffect(() => {
         if (addressInfo){
@@ -43,7 +44,9 @@ const ShippingScreen = ({history, match }) => {
             setAddress(addressInfo.streetAndNumber)
             setCity(addressInfo.city)
             console.log('looping in addressInfo')
-        }   
+        }else{
+            dispatch(getUserDetails('profile'));
+        }
         console.log("this is looping")
     }, [success, addressInfo])
 
@@ -91,10 +94,13 @@ const ShippingScreen = ({history, match }) => {
     return <Container>
     <Row className="justify-content-md-center">
         <Col className={colWidth}>
-        {history.location.pathname === '/envio' &&
-        <Row >
-            <Link to='/carrito'> Regresar</Link>
-        </Row>
+        {shippingScreen &&
+            <Row>
+                <Link to='/carrito'> Regresar</Link>
+            </Row>
+        }
+        {shippingScreen &&
+            <CheckoutSteps step1 step2></CheckoutSteps>
         }
         
         <h1> Envío <i className="fa fa-truck" aria-hidden="true"></i></h1>
