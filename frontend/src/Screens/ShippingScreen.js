@@ -9,6 +9,7 @@ import FormContainer from '../Components/FormContainer'
 import {validateZip} from '../actions/zipValidationActions'
 import {getUserDetails, updateUserAddress} from '../actions/userActions'
 import { get } from 'request'
+import {BiPackage} from 'react-icons/bi'
 
 const ShippingScreen = ({history, match }) => {
     const dispatch = useDispatch()
@@ -103,7 +104,7 @@ const ShippingScreen = ({history, match }) => {
             <CheckoutSteps step1 step2></CheckoutSteps>
         }
         
-        <h1> Envío <i className="fa fa-truck" aria-hidden="true"></i></h1>
+        <h1> Envío <BiPackage/></h1>
         <Form  noValidate validated={validated} onSubmit={submitHandler} >
             <Form.Group controlId='address' >
                 <Form.Label>Calle y número</Form.Label>

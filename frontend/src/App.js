@@ -17,12 +17,17 @@ import Header from './Components/Header'
 import Footer from './Components/Footer'
 import { Container } from 'react-bootstrap';
 import ShippingScreen from './Screens/ShippingScreen'
+import Navbar from './Components/Navigation/Navbar'
 
 function App() {
   return (
    
     <Router >
-      <Header/>
+      {/* <Header/> */}
+     
+      <Navbar/> 
+     
+
       <main className='App'>
         <Container>
           <Route path='/envio' component={ShippingScreen}/>
@@ -36,6 +41,7 @@ function App() {
           <Route path='/carrito/:id?' component={CartScreen}/> 
           <Route path='/dulceria' component={DulceriaScreen}/> 
           <Route path='/' component={HomeScreen} exact/> 
+          
         </Container>
       </main>
       <Footer/>

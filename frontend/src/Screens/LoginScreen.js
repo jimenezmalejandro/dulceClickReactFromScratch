@@ -10,7 +10,6 @@ import FormContainer from '../Components/FormContainer'
 
 const LoginScreen = ({location, history}) => {
     
-
     const dispatch = useDispatch()
 
     const userLogin = useSelector(state => state.userLogin)

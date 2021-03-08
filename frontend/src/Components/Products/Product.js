@@ -6,7 +6,6 @@ import {Link} from 'react-router-dom'
 import {addToCart} from '../../actions/cartActions'
 import {useDispatch} from 'react-redux'
 //Animation
-import {motion} from 'framer-motion'
 
 const Product = ({product}) => {
 
@@ -19,6 +18,7 @@ const Product = ({product}) => {
         setShow(true);
         
     }
+    
 
     return (
         <Card animate={{rotate:360}} transition={{duration:2}} className={classes.Card}>
@@ -57,7 +57,7 @@ const Product = ({product}) => {
                         <strong className="mr-auto">Añadido al carrito</strong>
                     </Toast.Header>
                     <Toast.Body>
-                    <i className="fas fa-cart-plus"></i> + 1
+                    <i className="fas fa-shopping-cart"></i> + 1
                     </Toast.Body>
                     </Toast>
                 </Col>
