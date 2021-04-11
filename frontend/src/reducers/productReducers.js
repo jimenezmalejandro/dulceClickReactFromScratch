@@ -5,7 +5,10 @@ import
     PRODUCT_LIST_FAIL,
     PRODUCT_DETAILS_REQUEST,
     PRODUCT_DETAILS_SUCCESS,
-    PRODUCT_DETAILS_FAIL
+    PRODUCT_DETAILS_FAIL, 
+    PRODUCT_SEARCH_REQUEST,
+    PRODUCT_SEARCH_SUCCESS,
+    PRODUCT_SEARCH_FAIL
 } from '../constants/productConstants'
 
 export const productListReducer = (state = {products: []}, action)=>{
@@ -51,5 +54,26 @@ export const productDetailsReducer = ( state = {product: {}}, action )=>{
             }
         default: 
             return state
+    }
+}
+
+export const productSearchReducer = (state = {foundProducts : []}, action) =>{
+    switch(action.type){
+        case PRODUCT_SEARCH_REQUEST:
+            return{
+                loading: true
+            }
+        case PRODUCT_SEARCH_SUCCESS:
+            return{
+                loading: false, 
+                foundProducts :  action.payload
+            }
+        case PRODUCT_SEARCH_FAIL :
+            return{
+                loading: false, 
+                foundProducts : action.payload
+            }
+            default :
+                return state
     }
 }

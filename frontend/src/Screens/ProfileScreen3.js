@@ -8,6 +8,7 @@ import {getUserDetails, updateUserProfile} from '../actions/userActions'
 import { USER_UPDATE_PROFILE_RESET} from '../constants/userConstants'
 import ShippingScreen from '../Screens/ShippingScreen'
 import classes from '../Styles/ProfileScreen.module.css' 
+import {RiKey2Fill} from 'react-icons/ri' 
 
 const ProfileScreen3 = ({history}) => {
     const [name, setName] = useState('')    
@@ -65,7 +66,7 @@ const ProfileScreen3 = ({history}) => {
     <Col sm={3} >
       <Nav  variant="pills" style={{"margin":"20px"}} className="flex-column">
         <Nav.Item>
-          <Nav.Link eventKey="#misdatos">Mis datos de cuenta</Nav.Link>
+          <Nav.Link eventKey="#misdatos">Mis datos de cuenta </Nav.Link>
         </Nav.Item>
         <Nav.Item>
           <Nav.Link eventKey="#ordenes">Mis órdenes</Nav.Link>
@@ -79,7 +80,7 @@ const ProfileScreen3 = ({history}) => {
       <Tab.Content>
          <Tab.Pane eventKey="#misdatos">
          {/* <h1>Actualizar Cuenta</h1> */}
-         <h3 style={{"textAlign" : "left"}}>Acceso</h3>
+         <h3 style={{"textAlign" : "left"}}>Acceso <RiKey2Fill/></h3>
                 {message && <Message variant='danger'>{message}</Message>}
                 {success &&  <Message variant='success'>{success}</Message>}
                 {error && <Message variant='danger'>{error}</Message>}

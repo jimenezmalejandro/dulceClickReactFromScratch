@@ -28,15 +28,17 @@ const Navbar = ({history, location, match}) => {
     let currentPath = history.location.pathname
 
     const [sidebar, setSidebar] = useState(false)
-
-    const logoutHandler = dispatch( logout )
+    const[busqueda, setBusqueda] = useState('')
 
     const showSidebar = (e)=> {
         setSidebar(!sidebar)
     }
 
+    const submitHandler = (e)=> {
+        e.preventDefault()
+        history.push(`/busqueda?producto=${busqueda}`)
+    }
     
-
     return (
         <>
             <div className={sidebar? 'bckgr' : ''} onClick={showSidebar}></div>
@@ -54,14 +56,15 @@ const Navbar = ({history, location, match}) => {
                         </Link>
                     </div>
 
-                <div className='searchBar'>
-                    <Form>
-                          <Form.Control type='text' placeholder='Buscar'/>
+                <div className='searchBar' >
+                    <Form id='busqueda'onSubmit={submitHandler} >
+                          <Form.Control type='text' placeholder='Buscar' onChange={(e) => setBusqueda(e.target.value) } />
                     </Form>
-                    <a href='#' className='searchIcon'>
+                    <div className='searchIcon' onClick={submitHandler}>
                         <BsIcons.BsSearch />
-                    </a>
+                    </div>
                 </div>
+                
             </div>
 
             <nav className={sidebar? 'nav-menu active': 'nav-menu'}>
@@ -119,7 +122,7 @@ const Navbar = ({history, location, match}) => {
                     </li>
                     {user && 
                     <li className='cerrarSesion'>
-                        <a href="#" onClick={logoutHandler}>Cerrar sesión</a>
+                        <a href="/" onClick={dispatch(logout)}>Cerrar sesión</a>
                     </li>}
                     
                 </ul>

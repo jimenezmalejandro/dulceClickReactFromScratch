@@ -6,6 +6,7 @@ import Message from '../Components/Message'
 import Loader from '../Components/Loader'
 import {login} from '../actions/userActions'
 import FormContainer from '../Components/FormContainer'
+import {GoKey} from 'react-icons/go'
 
 
 const LoginScreen = ({location, history}) => {
@@ -34,7 +35,7 @@ const LoginScreen = ({location, history}) => {
 
     return (
         <FormContainer>
-            <h1>Ingresa a tu cuenta</h1>
+            <h1>Ingresa a tu cuenta </h1>
             {error && <Message variant='danger'>{error}</Message>}
             {loading && <Loader></Loader>}
             <Form onSubmit={submitHandler}>

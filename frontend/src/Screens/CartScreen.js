@@ -60,7 +60,7 @@ const CartScreen = ({history}) => {
                                 </span>
                                 </h3>
                             </ListGroup.Item>
-                            <ListGroupItem className={ yOffset >= 241 ? classes.completarCompra : ''}>
+                            <ListGroupItem className={ yOffset >= 245 ? classes.completarCompra : ''}>
                                 <Button type='button' style={{width: '100%', minHeight:'3rem', backgroundColor:'#e4f434', color:'black', borderColor:'white'}}
                                     disabled={cartItems.length < 1}
                                     onClick={checkoutHandler}
