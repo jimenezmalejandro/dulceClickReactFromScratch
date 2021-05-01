@@ -12,14 +12,15 @@ app.use(express.json())
 const validateZip = asyncHandler( async (req, res)=>{
     const {zipcode} = req.body
 
-    const foundZip = await ZipCode.findOne({zipcode})
+    const foundZip = await ZipCode.find({zipcode})
     
-    if(foundZip){
+    if(foundZip.length !== 0  ){
+        // let colonias = foundZip.map(element => element.colonias )
         res.json({
-            _id: foundZip._id,
-            colonias : foundZip.colonias,
-            zipcode : foundZip.zipcode,
-            municipio: foundZip.municipio
+            _id: foundZip[0]._id,
+            colonias : foundZip[0].colonias,
+            zipcode : foundZip[0].zipcode,
+            municipio: foundZip[0].municipio
         })
     }else{
         throw new Error('Lo sentimos, por el momento no hacemos entregas en tu zona (prueba con la de un amig@)')

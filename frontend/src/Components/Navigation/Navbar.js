@@ -38,6 +38,14 @@ const Navbar = ({history, location, match}) => {
         e.preventDefault()
         history.push(`/busqueda?producto=${busqueda}`)
     }
+
+    const evaluateSubmit = (e) => {
+        if(busqueda === ''){
+            return
+        }else{
+            submitHandler(e)
+        }
+    }
     
     return (
         <>
@@ -58,9 +66,9 @@ const Navbar = ({history, location, match}) => {
 
                 <div className='searchBar' >
                     <Form id='busqueda'onSubmit={submitHandler} >
-                          <Form.Control type='text' placeholder='Buscar' onChange={(e) => setBusqueda(e.target.value) } />
+                          <Form.Control required type='text' placeholder='Buscar' onChange={(e) => setBusqueda(e.target.value) } />
                     </Form>
-                    <div className='searchIcon' onClick={submitHandler}>
+                    <div className='searchIcon' onClick={evaluateSubmit}>
                         <BsIcons.BsSearch />
                     </div>
                 </div>

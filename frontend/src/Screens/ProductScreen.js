@@ -1,7 +1,9 @@
 import React, {useState, useEffect} from 'react'
 import {Link, withRouter} from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux'
-import {Row, Col, Image, ListGroup, Card, Button, Container, InputGroup, FormControl} from 'react-bootstrap'
+import {
+    Row, Col, Image, ListGroup, Card, Button, Container, InputGroup, FormControl, Toast
+} from 'react-bootstrap'
 import {productDetails} from '../actions/productActions'
 import Loader from '../Components/Loader'
 import Message from '../Components/Message'
@@ -13,6 +15,7 @@ const ProductScreen = ({match, history}) => {
     
     const [qty, setQty] = useState(1) 
     const [initial, setInitial] = useState(false)
+    const [show, setShow] = useState(false);
 
     const dispatch = useDispatch()
     
@@ -24,6 +27,7 @@ const ProductScreen = ({match, history}) => {
 
     useEffect(()=>{
          dispatch(productDetails(id))
+         window.scrollTo(0,0)
     }, [dispatch, match])
 
     const reduceQty = ()=>{
@@ -44,6 +48,7 @@ const ProductScreen = ({match, history}) => {
         dispatch(addToCart(id, qty))
         console.log(`dispatched id: ${id} qty:${qty}`);
         setInitial(100)
+        setShow(true);
     }
     
     return (
@@ -53,10 +58,10 @@ const ProductScreen = ({match, history}) => {
         {loading ? <Loader/> : error ? <Message variant='danger'>{error}</Message> :
          <Container fluid>
             <Row className="my-3" >
-                <Col md={4}>
+                <Col md={6} xl={4}>
                     <Image src={`/images/${product.imageUrl}`} alt={product.descripcion} fluid/>
                 </Col>
-                <Col md={3} style={{textAlign: 'left'}}>
+                <Col md={6} xl={3} style={{textAlign: 'left'}}>
                     <ListGroup variant='flush   '>
                         <ListGroup.Item>
                             <h3>{product.descripcion}</h3>
@@ -72,7 +77,7 @@ const ProductScreen = ({match, history}) => {
                         </ListGroup.Item>
                     </ListGroup>
                 </Col>
-                <Col md={4} style={{textAlign: 'left'}}>
+                <Col md={12} xl={4} style={{textAlign: 'left'}}>
                     <Card>
                         <ListGroup variant='flush'>
                             <ListGroup.Item>
@@ -106,25 +111,49 @@ const ProductScreen = ({match, history}) => {
                                     <InputGroup className="mb-1">
                                         <InputGroup.Append>
                                             <Button 
-                                                onClick={reduceQty }
-                                                variant="outline-secondary">-</Button>
-                                            </InputGroup.Append>
-                                            <FormControl
-                                                type='number'
-                                                disabled={true}
-                                                className={classes.Form}
-                                                value={qty}
-                                                onChange={(e)=> e.target.value<1 ? 1 : setQty(e.target.value) }
-                                            />
-                                            <InputGroup.Append>
+                                                onClick={reduceQty}
+                                                variant="outline-secondary">
+                                                -
+                                            </Button>
+                                        </InputGroup.Append>
+                                        <FormControl
+                                            type='number'
+                                            disabled={true}
+                                            className={classes.Form}
+                                            value={qty}
+                                            onChange={(e)=> e.target.value<1 ? 1 : setQty(e.target.value) }
+                                        />
+                                        <InputGroup.Append>
                                             <Button
-                                                onClick={ addQty } 
+                                                onClick={addQty} 
                                                 variant="outline-secondary">+</Button>  
-                                            </InputGroup.Append>
-                                        </InputGroup>
+                                        </InputGroup.Append>
+                                    </InputGroup>
                                     </Col>
                                 </Row>
                             </ListGroup.Item>
+
+                            <Row>
+                                <Col xs={12}>
+                                    <Toast 
+                                        style={{
+                                            position: 'absolute',
+                                            top: -80,
+                                            right: 0,
+                                            zIndex: 999999,
+                                            width: '170px'
+                                            }} 
+                                    onClose={() => setShow(false)} show={show} delay={900} autohide>
+                                    {/* <Toast.Header>
+                                        <strong className="mr-auto">Añadido al carrito</strong>
+                                    </Toast.Header> */}
+                                    <Toast.Body style={{'background-color' : 'green', 'color' : 'white'}}>
+                                        <i className="fas fa-check"></i> 
+                                        <strong className="mr-auto"> Añadido al carrito</strong>
+                                    </Toast.Body>
+                                    </Toast>
+                                </Col>
+                            </Row>
 
                             <ListGroup.Item style={{textAlign: 'center'}}>
                                 <Button 

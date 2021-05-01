@@ -30,16 +30,9 @@ const getProductById =asyncHandler( async (req, res)=>{
 const getProductsBySearch =asyncHandler( async (req, res)=>{
     console.log('req.params is: ' ,req.params.product)
     let prodName = req.params.product
-    const productsFound = await Product.find({descripcion: { "$regex" : prodName, "$options" :"i" } }, 
-        (error, data)=>{
-            if(error){
-                console.log(error)
-            }else{
-                console.log(data)
-            }
-        })
+    const productsFound = await Product.find({descripcion: { "$regex" : prodName, "$options" :"i" } })
     if(productsFound){
-        console.log('productsFound : ', productsFound)
+        
         res.json(productsFound)
     }else{
         res.status(404)

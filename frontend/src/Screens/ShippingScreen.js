@@ -5,10 +5,8 @@ import {Form, Button, Modal, Toast, Col, Row, Container} from 'react-bootstrap'
 import Message from '../Components/Message'
 import Loader from '../Components/Loader'
 import CheckoutSteps from '../Components/CheckoutSteps' 
-import FormContainer from '../Components/FormContainer'
 import {validateZip} from '../actions/zipValidationActions'
 import {getUserDetails, updateUserAddress} from '../actions/userActions'
-import { get } from 'request'
 import {BiPackage} from 'react-icons/bi'
 
 const ShippingScreen = ({history, match }) => {
@@ -18,7 +16,7 @@ const ShippingScreen = ({history, match }) => {
     const {user : {addressInfo}} = userDetails
 
     const zip = useSelector((state)=> state.zipValidate)
-    const {zipInfo} = zip
+    const {zipInfo, error : zipError, loading : loadZip } = zip
 
     const userUpdateAddress = useSelector(state => state.userUpdateAddress)
     const {loading, error, success} = userUpdateAddress
@@ -38,6 +36,7 @@ const ShippingScreen = ({history, match }) => {
     const colWidth = shippingScreen ? 'col-lg-6' : 'col-lg-12 col-md-9'
 
     useEffect(() => {
+        let coloniasSelect = document.querySelector('#neighborhood')
         if (addressInfo){
             setReferences(addressInfo.references)
             setCellphone(addressInfo.cellphone)
@@ -48,15 +47,31 @@ const ShippingScreen = ({history, match }) => {
         }else{
             dispatch(getUserDetails('profile'));
         }
-        console.log("this is looping")
-    }, [success, addressInfo])
+        if(zipInfo){
+            console.log(zipInfo)
+            coloniasSelect.innerHTML = ''
+            console.log(coloniasSelect.options)
+            zipInfo.colonias.map(element => {
+                let option = document.createElement('option')
+                option.text = element
+                option.value = element
+                coloniasSelect.add(option)
+            })
+        }
+        if(zipError){
+            setNotSupportedZip(true)
+        }
+    }, [success, addressInfo, zipInfo, zipError])
 
     const submitHandler =  (e)=>{
         e.preventDefault()
         e.stopPropagation()
+
         const form = e.currentTarget
         
         setValidated(true)
+
+        console.log(form.checkValidity())
 
         if(form.checkValidity() === false){
             return
@@ -91,7 +106,16 @@ const ShippingScreen = ({history, match }) => {
         setValidated(false)
         setNotSupportedZip(false)
     }
- 
+    
+    const validation = e =>{
+        setPostalCode(e.target.value)
+
+        if(e.target.value.length === 5){
+            dispatch(validateZip(e.target.value))
+        }
+        
+    }
+
     return <Container>
     <Row className="justify-content-md-center">
         <Col className={colWidth}>
@@ -120,19 +144,6 @@ const ShippingScreen = ({history, match }) => {
                 </Form.Control.Feedback>
             </Form.Group>
 
-            <Form.Group controlId='neighborhood'>
-                <Form.Label>Colonia</Form.Label>
-                <Form.Control 
-                    required
-                    type='text'
-                    placeholder='Colonia' 
-                    value={neighborhood} 
-                    onChange={(e)=> setNeighborhood(e.target.value)}>
-                </Form.Control>
-                <Form.Control.Feedback type="invalid">
-                    Por favor ingresa tu colonia
-                </Form.Control.Feedback>
-            </Form.Group>
 
 
             <Form.Group controlId='city'>
@@ -158,8 +169,9 @@ const ShippingScreen = ({history, match }) => {
                     value={postalCode} 
                     onChange={(e) => 
                         {
-                            setPostalCode(e.target.value)   
-                            dispatch(validateZip(e.target.value))
+                            validation(e)
+                            // setPostalCode(e.target.value)   
+                            // dispatch(validateZip(e.target.value))
                         }}
                     >
                 </Form.Control> 
@@ -167,6 +179,24 @@ const ShippingScreen = ({history, match }) => {
                     El código postal es necesario para la entrega
                 </Form.Control.Feedback>
             </Form.Group>
+
+            {loadZip ? <Loader></Loader> : 
+            <Form.Group controlId='neighborhood'>
+                <Form.Label>Colonia</Form.Label>
+                <Form.Control
+                    as="select" 
+                    // id="colonias"
+                    required
+                    type='text'
+                    placeholder='Colonia' 
+                    value={neighborhood} 
+                    onChange={(e)=> setNeighborhood(e.target.value)}>
+                </Form.Control>
+                <Form.Control.Feedback type="invalid">
+                    Por favor ingresa tu colonia
+                </Form.Control.Feedback>
+            </Form.Group>
+            }
 
             <Form.Group controlId='reference'>
                 <Form.Label>Referencia</Form.Label>
@@ -178,7 +208,7 @@ const ShippingScreen = ({history, match }) => {
                     onChange={(e)=> setReferences(e.target.value)}>
                 </Form.Control> 
                 <Form.Control.Feedback type="invalid">
-                    Por favor ingresa una referencia, nombre de tu coto, color de cancel, punto de interés cercano....
+                    Por favor ingresa una referencia, nombre de tu coto, punto de interés cercano....
                 </Form.Control.Feedback>
             </Form.Group>
 
@@ -193,7 +223,7 @@ const ShippingScreen = ({history, match }) => {
                     onChange={(e)=> setCellphone(e.target.value)}>
                 </Form.Control> 
                 <Form.Control.Feedback type="invalid">
-                    10 dígitos -Usaremos tu número para comunicarnos contigo en caso de tener problemas con la entrega
+                    10 dígitos -Usaremos tu número para comunicarnos contigo para realizar la entrega
                 </Form.Control.Feedback>
             </Form.Group>
             
@@ -219,7 +249,7 @@ const ShippingScreen = ({history, match }) => {
     >
         <Modal.Header>Alerta!</Modal.Header>
         <Modal.Body>
-            Lo sentimos!😳 No tenemos cobertura en tu zona.(Prueba con la de un amig@)
+            Lo sentimos!😳 No tenemos cobertura en tu código postal.(Prueba con la de un amig@)
         </Modal.Body>
         <Button onClick={closeModal}>Ok</Button>
 
