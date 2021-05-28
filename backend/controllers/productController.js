@@ -28,7 +28,7 @@ const getProductById =asyncHandler( async (req, res)=>{
 // @access Public
 //                  COMPLETE ME!-----------------------
 const getProductsBySearch =asyncHandler( async (req, res)=>{
-    console.log('req.params is: ' ,req.params.product)
+    console.log('req is: ' ,req)
     let prodName = req.params.product
     const productsFound = await Product.find({descripcion: { "$regex" : prodName, "$options" :"i" } })
     if(productsFound){

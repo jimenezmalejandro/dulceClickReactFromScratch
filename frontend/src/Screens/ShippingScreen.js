@@ -93,6 +93,7 @@ const ShippingScreen = ({history, match }) => {
            dispatch(updateUserAddress(newAddress))
            setShow(true)
            dispatch(getUserDetails('profile'))
+           history.push('/pago')
         }
 
     }
@@ -143,8 +144,6 @@ const ShippingScreen = ({history, match }) => {
                     Por favor ingresa calle y número.
                 </Form.Control.Feedback>
             </Form.Group>
-
-
 
             <Form.Group controlId='city'>
                 <Form.Label>Ciudad</Form.Label>
@@ -247,7 +246,7 @@ const ShippingScreen = ({history, match }) => {
         centered
         show={notSupportedZip}
     >
-        <Modal.Header>Alerta!</Modal.Header>
+        <Modal.Header>Atención!</Modal.Header>
         <Modal.Body>
             Lo sentimos!😳 No tenemos cobertura en tu código postal.(Prueba con la de un amig@)
         </Modal.Body>

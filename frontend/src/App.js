@@ -11,6 +11,7 @@ import LoginScreen from './Screens/LoginScreen';
 import ForgtoPasswordScreen from './Screens/ForgotPasswordScreen'
 import RegisterScreen from './Screens/RegisterScreen';
 import BusquedaScreen from './Screens/BusquedaScreen'
+import PaymentScreen from './Screens/PaymentScreen'
 //import ProfileScreen from './Screens/ProfileScreen'
 //import ProfileScreen2 from './Screens/ProfileScreen2'
 import ProfileScreen3 from './Screens/ProfileScreen3'
@@ -32,6 +33,7 @@ function App() {
       <main className='App'>
         <Container>
           <Route path='/envio' component={ShippingScreen}/>
+          <Route path='/pago' component={PaymentScreen}/>
           <Route path='/cuenta' component={LoginScreen}/>
           {/* <Route path='/micuenta' component={ProfileScreen}/> */}
           {/* <Route path='/micuenta' component={ProfileScreen2}/> */}

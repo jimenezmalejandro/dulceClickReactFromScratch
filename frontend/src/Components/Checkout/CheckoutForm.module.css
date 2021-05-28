@@ -1,0 +1,71 @@
+.card {
+  background-color: #6772e5;
+  height: 172px;
+  width: 380px;
+  border: none;
+  border-radius: 10px;
+  justify-content: center;
+  box-shadow: 5px 8px 6px 5px #888888;
+}
+
+.card input {
+  background-color: rgb(119, 149, 248);
+}
+
+.creditCard {
+  display: flex;
+  justify-content: center;
+}
+
+.card label {
+  color: black;
+  display: flex;
+  width: 100%;
+  background-color: white;
+  height: 35px;
+  justify-content: center;
+  align-items: center;
+}
+
+.card input {
+  background-color: white;
+  background-color: rgb(119, 149, 248);
+}
+
+.creditCard {
+  display: flex;
+  justify-content: center;
+}
+
+.button {
+  width: 50%;
+  margin-top: 1rem;
+}
+
+.button:disabled {
+  opacity: 0.5;
+  cursor: default;
+  background-color: gray;
+  border: none;
+}
+.button:active {
+  background-color: #d782d9;
+  box-shadow: 0 6px 9px rgba(50, 50, 93, 0.06), 0 2px 5px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 #e298d8;
+  transform: scale(0.99);
+}
+
+.tarjetaIcon label {
+  display: flex;
+  justify-content: center;
+}
+
+.formLabl label {
+  text-align: left;
+  width: 100%;
+  font-weight: 100;
+}
+
+.zipOnCard input {
+  width: 5rem;
+}
