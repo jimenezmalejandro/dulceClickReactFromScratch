@@ -18,6 +18,11 @@ const userSchema = mongoose.Schema({
         required: true
     },
 
+    paymentIntents: {
+        type: Array,
+        required: false
+    },
+
     address:{
 
         streetAndNumber : {

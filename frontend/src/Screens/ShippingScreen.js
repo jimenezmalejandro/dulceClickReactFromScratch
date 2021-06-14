@@ -122,14 +122,18 @@ const ShippingScreen = ({history, match }) => {
         <Col className={colWidth}>
         {shippingScreen &&
             <Row>
-                <Link to='/carrito'> Regresar</Link>
+                <Link to='/carrito' className='btn'> 
+                    <Button variant="dark">
+                        Regresar
+                    </Button>
+                </Link>
             </Row>
         }
         {shippingScreen &&
             <CheckoutSteps step1 step2></CheckoutSteps>
         }
         
-        <h1> Envío <BiPackage/></h1>
+        <h3 style={{'marginBottom': '2rem'}}> Dirección de envío <BiPackage/></h3>
         <Form  noValidate validated={validated} onSubmit={submitHandler} >
             <Form.Group controlId='address' >
                 <Form.Label>Calle y número</Form.Label>

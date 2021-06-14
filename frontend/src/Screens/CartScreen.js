@@ -2,26 +2,39 @@ import React, {useEffect, useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import Message from '../Components/Message'
 import {Link, withRouter} from 'react-router-dom'
-import {Row, Col, ListGroup, Image, Card, Button, InputGroup, FormControl, ListGroupItem} from 'react-bootstrap'
+import {Row, Col, ListGroup, Image, Card, Button, InputGroup, FormControl, ListGroupItem, Modal} from 'react-bootstrap'
 import classes from '../Styles/ProductScreen.module.css'
 import {addToCart, removeFromCart} from '../actions/cartActions'
-import {FaShoppingBasket} from 'react-icons/fa'
+import {FaShoppingBasket, FaTruck} from 'react-icons/fa'
+import NumberFormat from 'react-number-format'
 
 const CartScreen = ({history}) => {
+    console.log(history)
 
     const [yOffset, setYOffset] = useState(0)
+    const [show, setShow] = useState(false);
 
     const dispatch = useDispatch()
 
     const cart = useSelector(state => state.cart)
     const {cartItems} = cart
     
+    const handleClose = () => {
+        setShow(false)
+        history.push('/cuenta?redirect=envio')
+    };
+    const handleShow = () => setShow(true);
+    const handleKeepShopping = ()=> {
+        setShow(false)
+    }
+
     useEffect(()=>{
         window.addEventListener('scroll',handleScroll )
         
         return() =>{
             window.removeEventListener('scroll',handleScroll)
         }
+
     },[dispatch])
 
 
@@ -30,6 +43,12 @@ const CartScreen = ({history}) => {
     }
 
     const checkoutHandler = ()=>{
+        let totalMxn = cartItems.reduce((accum, item) => accum + item.precio * item.qty ,0 )
+        console.log(totalMxn)
+        if(totalMxn < 1000){
+            handleShow()
+            return
+        }
         history.push('/cuenta?redirect=envio')
     }
 
@@ -40,6 +59,30 @@ const CartScreen = ({history}) => {
 
     return (
         <Row >
+            <Modal show={show} onHide={handleClose} centered>
+                <Modal.Header closeButton>
+                    <Modal.Title>Envío Gratuito</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>Recuerda el envío gratuito aplica en compras de $999mxn o más. El total 
+                    en tu carrito es de {" "} 
+                    <NumberFormat 
+                        value={cartItems.reduce((accum, item) => accum + item.precio * item.qty ,0 )} 
+                        displayType={'text'}
+                        prefix={'$'}
+                        suffix={'mxn'}
+                        decimalScale={2}
+                        fixedDecimalScale={true}
+                        ></NumberFormat>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Pagar envío
+                    </Button>
+                    <Button variant="primary" onClick={handleKeepShopping}>
+                        Seguir comprando
+                    </Button>
+                </Modal.Footer>
+            </Modal>
             <Col md={4} >
                 <div className={classes.comprarSticky}>
                     <h1> Comprar <FaShoppingBasket/> </h1>
@@ -68,6 +111,19 @@ const CartScreen = ({history}) => {
                                     Completar compra <i className="fas fa-credit-card"></i>
                                 </Button>
                             </ListGroupItem>
+                            {cartItems.reduce((accum, item) => accum + item.precio * item.qty ,0 ) >= 999 ? (
+                            <ListGroupItem>
+                                    <span style={{'color': 'green'}}>Envío gratis {" "}
+                                        <FaTruck></FaTruck>
+                                    </span>
+                            </ListGroupItem> )
+                            :
+                            (<ListGroupItem>
+                                    <span style={{'color': 'darkGray', 'fontWeight':'500'}}>Completa 999 o más para envío gratuito {" "}
+                                        <FaTruck></FaTruck>
+                                    </span>
+                            </ListGroupItem> )
+                            }
                         </ListGroup>
                     </Card>
                 </div>

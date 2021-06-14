@@ -48,7 +48,6 @@ const ProductScreen = ({match, history}) => {
     const addToCartHandler = ()=>{
         
         dispatch(addToCart(id, qty))
-        console.log(`dispatched id: ${id} qty:${qty}`);
         setInitial(100)
         setShow(true);
     }

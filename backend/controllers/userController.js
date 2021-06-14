@@ -33,8 +33,8 @@ const authUser = asyncHandler( async (req, res)=>{
 // @route POST/api/users/reset 
 // @access Public
 const resetPassword = asyncHandler( async (req, res)=>{
+
     const {email, validation} = req.body
-    console.log(validation)
 
     if(!validation){
         res.status(400)
@@ -43,7 +43,6 @@ const resetPassword = asyncHandler( async (req, res)=>{
  
     //Secret Key
     const secretKey = process.env.RECAPTCHA_SECRET_KEY
-    console.log(secretKey)
     //Verify URL
     const verifyUrl =  `https://www.google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${validation}&remoteip=${req.connection.remoteAddress}`
     //Make request to verify URL
@@ -215,4 +214,42 @@ const getUserProfile = asyncHandler( async (req, res)=>{
     }
 })  
 
-export {authUser, getUserProfile, registerUser, updateUserProfile, resetPassword, updateUserAddress} 
+//@description: POST payment intent to user's profile
+//@route: POST/api/users/pushIntent
+//@access: Private
+const pushPaymentIntent = asyncHandler(async (req, res)=>{
+    console.log('request body:', req.body)
+    
+    const {paymentIntentData, user} = req.body
+    try {
+        const existingUser = await User.findById(user._id)
+
+        if(existingUser){
+            
+            existingUser.paymentIntents = [...existingUser.paymentIntents, paymentIntentData]
+            const userData = await existingUser.save()
+            res.json({
+                userData
+            })
+
+        }else{
+            res.status(404)
+            throw new Error('Un error ha ocurrido. Si el problema persiste, por favor contáctanos al correo de sporte')
+        }
+    } catch (error) {
+        res.status(500)
+        res.json('Error interno del servidor. NO SE HAN REALIZADO CARGOS')
+    }
+})
+
+
+
+export {
+    authUser, 
+    getUserProfile, 
+    registerUser, 
+    updateUserProfile, 
+    resetPassword, 
+    updateUserAddress,
+    pushPaymentIntent
+} 

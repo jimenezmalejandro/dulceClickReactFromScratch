@@ -69,3 +69,9 @@
 .zipOnCard input {
   width: 5rem;
 }
+
+.lgItem {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 500;
+}

@@ -1,24 +1,58 @@
-import React, {useState} from 'react'
-import{Row, Container, Form, Col, Card, Button} from 'react-bootstrap'
+import React, {useState, useEffect} from 'react'
+import {useSelector, useDispatch} from 'react-redux'
+import{Row, Container, Form, Col, Card, Button, ListGroup} from 'react-bootstrap'
 import Message from '../Message'
+import Loader from '../Loader'
+import ChekoutSteps from '../CheckoutSteps'
 import {useFormik} from 'formik'
 import {CardElement, useStripe, useElements} from '@stripe/react-stripe-js'
 import {billingInfoSchema } from '../../formValidations/billingValidation'
 import {FaCreditCard} from 'react-icons/fa'
 import classes from './CheckoutForm.module.css'
+import NumberFormat from 'react-number-format'
+import {es} from 'date-fns/locale'
+import {format, add} from 'date-fns'
+import {createPaymentIntent, clearClientSecret} from '../../actions/paymentActions'
+import CheckoutSteps from '../CheckoutSteps'
+
 
 const CheckoutWithFormik = () => {
+    const dispatch = useDispatch()
+
     const stripe = useStripe()
     const elements = useElements()
     const [processing, setProcessing] = useState(false)
     const [cardComplete, setCardComplete] = useState(false)
     const [paymentError, setPaymentError] = useState(null)
 
+    const itemList = useSelector(state => state.cart)
+    const {cartItems} = itemList
+
+    const userDetails = useSelector(state=> state.userDetails)
+    const {user} = userDetails
+
+    const  paymentIntent = useSelector(state => state.paymentIntent)
+    const {loading} = paymentIntent
+
+
+    let deliveryDate = format( add(new Date(),{days: 2}), 'EEEEEEE d MMM ',{locale:es})
+
     const handleCardChange = e =>{
-        console.log(e)
-        setPaymentError(e.error)
         setCardComplete(e.complete)
+        setPaymentError(e.error)
     }
+
+    useEffect(() => {
+        
+        window.scrollTo(0,0) 
+        dispatch(createPaymentIntent(cartItems, user))    
+        console.log('loop')
+
+        return () => {
+            dispatch(clearClientSecret())
+        }
+
+    }, [])
 
     const formik = useFormik({
         initialValues : {
@@ -82,8 +116,55 @@ const CheckoutWithFormik = () => {
       }
       
 
-    return (
-            <Container>
+    return (<>
+            <CheckoutSteps step1 step2 step3></CheckoutSteps>
+            { loading ? <Loader/> : <Container>
+            <Row className="justify-content-md-center my-3">
+                <Col className='col-lg-6 col-xl-6 col-md-8 col-sm-12 center'>
+                    <ListGroup variant='flush'>
+                        <ListGroup.Item className={classes.lgItem}>
+                            <div>Productos ({cartItems.reduce((accum, item) => accum + item.qty ,0 )}):</div>
+                            <NumberFormat
+                                displayType='text'
+                                value={cartItems.reduce((accum, item)=> accum + item.precio * item.qty ,0)}
+                                thousandSeparator={true}
+                                prefix={'$'}
+                                decimalScale={2}
+                                fixedDecimalScale={true}
+                            ></NumberFormat>
+                        </ListGroup.Item>
+                        <ListGroup.Item className={classes.lgItem}>Envío: 
+                            <NumberFormat
+                                    displayType='text'
+                                    value={cartItems.reduce((accum, item)=> accum + item.precio * item.qty ,0) >= 999 ? 0 : 139 }
+                                    thousandSeparator={true}
+                                    prefix={'$'}
+                                    decimalScale={2}
+                                    fixedDecimalScale={true}
+                                ></NumberFormat>
+                        </ListGroup.Item>
+                        <ListGroup.Item className={classes.lgItem}>Total: 
+                            <span style={{'fontWeight': 900}}>
+                                <NumberFormat
+                                        displayType='text'
+                                        value={
+                                            (cartItems.reduce((accum, item)=> accum + item.precio * item.qty ,0) >= 999 ? 0 : 139)
+                                            + cartItems.reduce((accum, item)=> accum + item.precio * item.qty ,0)
+                                        }
+                                        thousandSeparator={true}
+                                        prefix={'$'}
+                                        decimalScale={2}
+                                        fixedDecimalScale={true}
+                                    ></NumberFormat>
+                            </span>
+                        </ListGroup.Item>
+                        <ListGroup.Item className={classes.lgItem}>
+                            <div>Entrega:</div>
+                            <div><span style={{'color' : 'green'}}>{deliveryDate}</span></div>
+                        </ListGroup.Item>
+                    </ListGroup>
+                </Col>
+            </Row>
             <Row className="justify-content-md-center">
                 <Col className='col-lg-6 col-xl-6 col-md-8'>            
                 <Form noValidate onSubmit={formik.handleSubmit} className={classes.formLabl}>
@@ -98,7 +179,7 @@ const CheckoutWithFormik = () => {
                                     {paymentError.message}
                                 </Message>
                                 )}
-                    <h5 className='my-5'>Dirección de facturación (Tarjeta)</h5>
+                    <h5 className='my-4'>Dirección de facturación (Tarjeta)</h5>
                     {console.log(formik)}
                     <Form.Group controlId='nombre' >
                         <Form.Label>Nombre del titular</Form.Label>
@@ -156,8 +237,10 @@ const CheckoutWithFormik = () => {
                 </Col>
             </Row>
     
-        </Container> 
+        </Container> }
+        </>
     )
 }
+
 
 export default CheckoutWithFormik
