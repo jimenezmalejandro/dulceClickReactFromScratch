@@ -6,6 +6,40 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-family: "Varela Round", sans-serif;
+  background-image: linear-gradient(
+    170deg,
+    #333 12%,
+    #4f1a5d 16%,
+    #671d75 24%,
+    #81208d 32%,
+    #9f22a6 40%,
+    #c022c1 48%,
+    #c51ebd 52%,
+    #9f22a6 70%,
+    #81208d 78%,
+    #671d75 86%,
+    #4f1a5d 92%,
+    #333 99%
+  );
+  background-attachment: fixed;
+}
+
+h1 {
+  color: #fff;
+  text-shadow: -1px 1px 2px #000, 1px 1px 2px #000, 1px -1px 0 #000,
+    -1px -1px 0 #000;
+}
+h3 {
+  color: #fff;
+  text-shadow: -1px 1px 2px #000, 1px 1px 2px #000, 1px -1px 0 #000,
+    -1px -1px 0 #000;
+}
+
+.list-group {
+  background-color: transparent;
+}
+.list-group-item {
+  background-color: transparent;
 }
 
 code {

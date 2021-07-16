@@ -10,7 +10,6 @@ import Message from '../Components/Message'
 import classes from '../Styles/ProductScreen.module.css'
 import { addToCart } from '../actions/cartActions'
 
-
 const ProductScreen = ({match, history}) => {
     
     const screenWidth = window.innerWidth
@@ -58,108 +57,26 @@ const ProductScreen = ({match, history}) => {
         <Button onClick={()=> history.goBack()} className='btn btn-dark my-3'>regresar</Button>
         {loading ? <Loader/> : error ? <Message variant='danger'>{error}</Message> :
          <Container fluid>
-            {screenWidth <= 767 &&
-            <Row className="my-3">
-            <Col  style={{textAlign: 'left'}}>
-                    <Card>
-                        <ListGroup variant='flush'>
-                            <ListGroup.Item>
-                                <Row>
-                                    <Col>
-                                    Precio: 
-                                    </Col>
-                                    <Col>
-                                        <strong>${ product.precio ? (product.precio).toFixed(2) : product.precio } MXN</strong>
-                                    </Col>
-                                </Row>
-                            </ListGroup.Item>
-                            
-                            <ListGroup.Item>
-                                <Row>
-                                    <Col>
-                                    Cantidad: 
-                                    </Col>
-                                    <Col>
-                                    <InputGroup className="mb-1">
-                                        <InputGroup.Append>
-                                            <Button 
-                                                onClick={reduceQty}
-                                                variant="outline-secondary">
-                                                -
-                                            </Button>
-                                        </InputGroup.Append>
-                                        <FormControl
-                                            type='number'
-                                            disabled={true}
-                                            className={classes.Form}
-                                            value={qty}
-                                            onChange={(e)=> e.target.value<1 ? 1 : setQty(e.target.value) }
-                                        />
-                                        <InputGroup.Append>
-                                            <Button
-                                                onClick={addQty} 
-                                                variant="outline-secondary">+</Button>  
-                                        </InputGroup.Append>
-                                    </InputGroup>
-                                    </Col>
-                                </Row>
-                            </ListGroup.Item>
-
-                            <Row>
-                                <Col xs={12}>
-                                    <Toast 
-                                        style={{
-                                            position: 'absolute',
-                                            top: -80,
-                                            right: 0,
-                                            zIndex: 999999,
-                                            width: '170px'
-                                            }} 
-                                    onClose={() => setShow(false)} show={show} delay={900} autohide>
-                                    {/* <Toast.Header>
-                                        <strong className="mr-auto">Añadido al carrito</strong>
-                                    </Toast.Header> */}
-                                    <Toast.Body style={{'background-color' : 'green', 'color' : 'white'}}>
-                                        <i className="fas fa-check"></i> 
-                                        <strong className="mr-auto"> Añadido al carrito</strong>
-                                    </Toast.Body>
-                                    </Toast>
-                                </Col>
-                            </Row>
-
-                            <ListGroup.Item style={{textAlign: 'center'}}>
-                                <Button 
-                                    onClick={addToCartHandler}
-                                    className={classes.Button} 
-                                    type='button'
-                                    disabled={product.existencia < 1}
-                                    >
-                                    Añadir al carrito <i className='fas fa-cart-plus'></i>
-                                </Button>
-                            </ListGroup.Item>
-                        </ListGroup>
-                    </Card>
-                </Col> 
-                </Row>
-                }
-
             <Row className="my-3" >
                 <Col md={6} xl={4}>
                     <Image src={`/images/${product.imageUrl}`} alt={product.descripcion} fluid/>
                 </Col>
                 <Col md={6} xl={4} style={{textAlign: 'left'}}>
                     <ListGroup variant='flush   '>
-                        <ListGroup.Item>
+                        <ListGroup.Item className={classes.listGroupText}>
                             <h3>{product.descripcion}</h3>
                         </ListGroup.Item>
-                        <ListGroup.Item>
+                        <ListGroup.Item className={classes.listGroupText}>
                             Precio : ${product.precio ? (product.precio).toFixed(2) : product.precio } MXN
                         </ListGroup.Item>
-                        <ListGroup.Item>
-                            Detalles.
-                            Producto: {product.descripcion}.
-                            Piezas aproximadas: { product.piezas} (sujeto a cambios por el proveedor)*
+                        <ListGroup.Item className={classes.listGroupText}>
                             Categoria: {product.categoria}.
+                        </ListGroup.Item>
+                        <ListGroup.Item className={classes.listGroupText}>
+                            Producto: {product.descripcion}.
+                        </ListGroup.Item>
+                        <ListGroup.Item className={classes.listGroupText}>
+                            Piezas aproximadas: { product.piezas} (sujeto a cambios por el proveedor)*
                         </ListGroup.Item>
                     </ListGroup>
                 </Col>
@@ -180,10 +97,10 @@ const ProductScreen = ({match, history}) => {
                             <ListGroup.Item>
                                 <Row>
                                     <Col>
-                                    Disponible: 
+                                    Disponibilidad: 
                                     </Col>
                                     <Col>
-                                        {product.existencia >=1 ? 'Disponible para entrega immediata' : 'No disponible'}
+                                        {product.existencia >=1 ? 'En stock' : 'No disponible'}
                                     </Col>
                                 </Row>
                             </ListGroup.Item>

@@ -1,12 +1,14 @@
 import React, { useEffect} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Col, Row } from 'react-bootstrap'
+import {withRouter, useHistory} from 'react-router-dom'
+import {} from 'react-router'
 import Product from '../Components/Products/Product'
 import Message from '../Components/Message'
 import Loader from '../Components/Loader'
 import {listProducts} from '../actions/productActions'
 
-const HomeScreen = () => { 
+const HomeScreen = ({history, match, location}) => { 
     const dispatch = useDispatch()
 
     const productList = useSelector(state => state.productList)
@@ -14,7 +16,10 @@ const HomeScreen = () => {
 
     useEffect(()=>{
         dispatch(listProducts())
-    },[dispatch])
+
+    }
+    
+    ,[dispatch])
 
     return (
         <>
@@ -34,4 +39,4 @@ const HomeScreen = () => {
     )
 }
 
-export default HomeScreen
+export default withRouter(HomeScreen)

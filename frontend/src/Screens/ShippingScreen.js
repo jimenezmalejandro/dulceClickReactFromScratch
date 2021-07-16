@@ -5,7 +5,7 @@ import {Form, Button, Modal, Toast, Col, Row, Container} from 'react-bootstrap'
 import Message from '../Components/Message'
 import Loader from '../Components/Loader'
 import CheckoutSteps from '../Components/CheckoutSteps' 
-import {validateZip} from '../actions/zipValidationActions'
+import {validateZip, zipValidateReset} from '../actions/zipValidationActions'
 import {getUserDetails, updateUserAddress} from '../actions/userActions'
 import {BiPackage} from 'react-icons/bi'
 
@@ -60,6 +60,13 @@ const ShippingScreen = ({history, match }) => {
         }
         if(zipError){
             setNotSupportedZip(true)
+        }
+        return ()=>{
+            if(zipInfo){
+
+                console.log('Clean out useEffect')
+                dispatch(zipValidateReset())
+            }
         }
     }, [success, addressInfo, zipInfo, zipError])
 
@@ -168,6 +175,8 @@ const ShippingScreen = ({history, match }) => {
                 <Form.Control
                     required
                     type='text'
+                    minLength='5'
+                    maxLength='5'
                     placeholder='Código postal' 
                     value={postalCode} 
                     onChange={(e) => 
@@ -179,7 +188,7 @@ const ShippingScreen = ({history, match }) => {
                     >
                 </Form.Control> 
                 <Form.Control.Feedback type="invalid">
-                    El código postal es necesario para la entrega
+                    El código postal es necesario para la entrega (5)
                 </Form.Control.Feedback>
             </Form.Group>
 

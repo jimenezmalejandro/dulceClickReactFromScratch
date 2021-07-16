@@ -18,7 +18,8 @@ import ProfileScreen3 from './Screens/ProfileScreen3'
 import Header from './Components/Header'
 import Footer from './Components/Footer'
 import { Container } from 'react-bootstrap';
-import ShippingScreen from './Screens/ShippingScreen'
+// import ShippingScreen from './Screens/ShippingScreen'
+import ShippingScreenFormik from './Screens/ShippingScreenFormik';
 import Navbar from './Components/Navigation/Navbar'
 
 function App() {
@@ -28,11 +29,9 @@ function App() {
       {/* <Header/> */}
      
       <Navbar/> 
-     
-
       <main className='App'>
         <Container>
-          <Route path='/envio' component={ShippingScreen}/>
+          <Route path='/envio' component={ShippingScreenFormik}/>
           <Route path='/pago' component={PaymentScreen}/>
           <Route path='/cuenta' component={LoginScreen}/>
           {/* <Route path='/micuenta' component={ProfileScreen}/> */}

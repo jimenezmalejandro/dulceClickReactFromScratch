@@ -22,7 +22,7 @@ import {
                     error: action.payload
                 }
             case  ZIP_VALIDATE_RESET:
-                return{}
+                return {}
                 
             default:
                 return state

@@ -5,9 +5,23 @@
   color: blue;
 }
 
+.subTotalAmount > * {
+  color: black;
+  text-shadow: none;
+}
+
 .Input {
   /* display: flex; */
   justify-content: center;
+}
+.Input Button {
+  /* display: flex; */
+  background-color: white;
+}
+.Input Input {
+  /* display: flex; */
+  padding: 0;
+  text-align: center;
 }
 
 .ListGroupItem {
@@ -15,6 +29,18 @@
   justify-content: center;
   align-items: center;
   min-height: 8rem;
+}
+
+.listGroupText {
+  color: #fff;
+  font-weight: 100;
+  text-shadow: -1px 1px 2px #000, 1px 1px 2px #000, 1px -1px 0 #000,
+    -1px -1px 0 #000;
+}
+
+.linkText {
+  color: #fff;
+  font-weight: 100;
 }
 
 .comprarSticky {

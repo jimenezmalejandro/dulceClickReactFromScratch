@@ -2,7 +2,8 @@ import axios from 'axios'
 import {
     ZIP_VALIDATE_FAIL,
     ZIP_VALIDATE_SUCCESS,
-    ZIP_VALIDATE_REQUEST
+    ZIP_VALIDATE_REQUEST,
+    ZIP_VALIDATE_RESET
 } from '../constants/zipConstants'
 
 export const validateZip = (zipcode) => async (dispatch)=>{
@@ -32,4 +33,12 @@ export const validateZip = (zipcode) => async (dispatch)=>{
                 : error.message
         })
     }
+}
+
+export const zipValidateReset = () => async (dispatch) =>{
+
+    dispatch({
+        type: ZIP_VALIDATE_RESET
+    })
+
 }

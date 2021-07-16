@@ -63,7 +63,7 @@ const CartScreen = ({history}) => {
                 <Modal.Header closeButton>
                     <Modal.Title>Envío Gratuito</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>Recuerda el envío gratuito aplica en compras de $999mxn o más. El total 
+                <Modal.Body>Recuerda! el envío gratuito aplica en compras de $999mxn o más. El total 
                     en tu carrito es de {" "} 
                     <NumberFormat 
                         value={cartItems.reduce((accum, item) => accum + item.precio * item.qty ,0 )} 
@@ -88,7 +88,7 @@ const CartScreen = ({history}) => {
                     <h1> Comprar <FaShoppingBasket/> </h1>
                     <Card>
                         <ListGroup variant='flush'>
-                            <ListGroup.Item >
+                            <ListGroup.Item className={classes.subTotalAmount} >
                                 <h2>Subtotal
                                     ({cartItems.reduce((accum, item) => accum + item.qty ,0 )})
                                     articulos
@@ -145,7 +145,7 @@ const CartScreen = ({history}) => {
                                           </Link>
                                       </Col>
                                       <Col md={4} xs={6} >
-                                        <Link to={`/product/${item.product}`}>{item.descripcion}</Link>
+                                        <Link to={`/product/${item.product}`} className={classes.linkText}>{item.descripcion}</Link>
                                         <div>
                                             <span style={{ fontSize: '1rem'}} >$ </span>
                                                 { String((item.precio)).split('.')[0]}.
@@ -175,7 +175,7 @@ const CartScreen = ({history}) => {
                                                     onClick={ (e)=> dispatch(addToCart(item.product,Number(item.qty) - Number(item.qty) + 1 ))}
                                                     variant="outline-secondary">+</Button>
                                                 </InputGroup.Append>
-                                            </InputGroup>
+                                        </InputGroup>
                                       </Col>
 
                                       <Col md={2} xs={6}>

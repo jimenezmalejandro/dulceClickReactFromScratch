@@ -1,19 +1,19 @@
 import React, {useState, useEffect} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
-import{Row, Container, Form, Col, Card, Button, ListGroup} from 'react-bootstrap'
+import{Row, Container, Form, Col, Card, Button, ListGroup, Image} from 'react-bootstrap'
 import Message from '../Message'
 import Loader from '../Loader'
-import ChekoutSteps from '../CheckoutSteps'
+import CheckoutSteps from '../CheckoutSteps'
 import {useFormik} from 'formik'
 import {CardElement, useStripe, useElements} from '@stripe/react-stripe-js'
 import {billingInfoSchema } from '../../formValidations/billingValidation'
-import {FaCreditCard} from 'react-icons/fa'
+import {RiSecurePaymentLine} from 'react-icons/ri'
 import classes from './CheckoutForm.module.css'
 import NumberFormat from 'react-number-format'
 import {es} from 'date-fns/locale'
 import {format, add} from 'date-fns'
 import {createPaymentIntent, clearClientSecret} from '../../actions/paymentActions'
-import CheckoutSteps from '../CheckoutSteps'
+
 
 
 const CheckoutWithFormik = () => {
@@ -60,7 +60,7 @@ const CheckoutWithFormik = () => {
             zip: ""
         },
         onSubmit: async (e)  => {
-            console.log(e)
+            
             const billingDetails = {
                 name: e.name,
                 address: {
@@ -98,18 +98,18 @@ const CheckoutWithFormik = () => {
         iconStyle: "solid",
         style: {
           base: {
-            iconColor:"#fff",
-            color: "#fff",
+            iconColor:"lightgray",
+            color: "#333",
             fontFamily: 'Arial, sans-serif',
             fontSmoothing: "antialiased",
             fontSize: "16px",
             "::placeholder": {
-              color: "#fff"
+              color: "lightgray"
             }
           },
           invalid: {
-            color: "#ffc7ee",
-            iconColor: "#ffc7ee"
+            color: "#f5c6cb",
+            iconColor: "#f5c6cb"
           }
         },
         hidePostalCode : true
@@ -159,7 +159,7 @@ const CheckoutWithFormik = () => {
                             </span>
                         </ListGroup.Item>
                         <ListGroup.Item className={classes.lgItem}>
-                            <div>Entrega:</div>
+                            <div>Entrega estimada:</div>
                             <div><span style={{'color' : 'green'}}>{deliveryDate}</span></div>
                         </ListGroup.Item>
                     </ListGroup>
@@ -168,19 +168,25 @@ const CheckoutWithFormik = () => {
             <Row className="justify-content-md-center">
                 <Col className='col-lg-6 col-xl-6 col-md-8'>            
                 <Form noValidate onSubmit={formik.handleSubmit} className={classes.formLabl}>
-                    <Form.Group controlId='creditCard'className={classes.creditCard} >
+                    {/* <Form.Group controlId='creditCard'className={classes.creditCard} >
                         <Card className={classes.card}>
                             <Form.Label className='my-4' >Tarjeta &nbsp; <FaCreditCard></FaCreditCard> </Form.Label>
                                 <CardElement id="card-element" options={cardStyle} onChange={handleCardChange} />
                         </Card>
-                    </Form.Group>
-                            {paymentError && (
+                    </Form.Group> */}
+                            
+
+                    {/* <h5 className='my-4'>Dirección de facturación (Tarjeta)</h5> */}
+                    {paymentError && (
                                 <Message variant='danger'> 
                                     {paymentError.message}
                                 </Message>
                                 )}
-                    <h5 className='my-4'>Dirección de facturación (Tarjeta)</h5>
-                    {console.log(formik)}
+                    <Form.Label>Tarjeta</Form.Label>
+                    <Form.Group className={classes.cardDetails}>
+                        <CardElement id="card-element"  onChange={handleCardChange} options={cardStyle} />
+                    </Form.Group>
+
                     <Form.Group controlId='nombre' >
                         <Form.Label>Nombre del titular</Form.Label>
                         <Form.Control
@@ -199,6 +205,7 @@ const CheckoutWithFormik = () => {
                                 {formik.errors.name}
                         </Form.Control.Feedback>
                     </Form.Group>
+
                 <Row>
                     <Form.Group as={Col} xs={4} controlId='zip' >
                         <Form.Label >CP</Form.Label>
@@ -230,7 +237,8 @@ const CheckoutWithFormik = () => {
                     </Form.Control>
                 </Form.Group>
                     <Button className={classes.button} disabled={!stripe || processing} type='submit' variant='warning'>
-                            {processing ? 'Procesando...' : 'Procesar pago' } 
+                            {processing ? 'Procesando...' :  
+                             <div>Processar pago <RiSecurePaymentLine/></div> } 
                     </Button>
     
                 </Form>
